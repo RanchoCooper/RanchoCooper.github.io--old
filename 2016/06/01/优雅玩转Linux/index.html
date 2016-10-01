@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Rancho" />
+
+
+
+<meta name="description" content="前言个人的Linux捣腾经历要从大一开始， 但在大一后暑假通读了《Linux私房菜》之后才渐渐步入正规
+本文只是总结性地罗列了一些常用工具配置, 如果你才上手Linux或者遇到什么问题, 欢迎留言
+各发型版相比较而言， ArchLinux就像初恋一样， 充满了很多可能和新奇， 每一天都会是新鲜的。 而主打桌面的Ubuntu则更像贤妻良母(简单易上手).
+下面就从界面美化, 硬件性能, 开发环境 三">
+<meta property="og:type" content="article">
+<meta property="og:title" content="优雅玩转Linux">
+<meta property="og:url" content="http://rancho1110.com/2016/06/01/优雅玩转Linux/index.html">
+<meta property="og:site_name" content="伯爵在古堡">
+<meta property="og:description" content="前言个人的Linux捣腾经历要从大一开始， 但在大一后暑假通读了《Linux私房菜》之后才渐渐步入正规
+本文只是总结性地罗列了一些常用工具配置, 如果你才上手Linux或者遇到什么问题, 欢迎留言
+各发型版相比较而言， ArchLinux就像初恋一样， 充满了很多可能和新奇， 每一天都会是新鲜的。 而主打桌面的Ubuntu则更像贤妻良母(简单易上手).
+下面就从界面美化, 硬件性能, 开发环境 三">
+<meta property="og:image" content="http://rancho1110.com/./oh-my-zsh.png">
+<meta property="og:image" content="http://rancho1110.com/./sublime.png">
+<meta property="og:image" content="http://rancho1110.com/./plaintasks.png">
+<meta property="og:updated_time" content="2016-07-04T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="优雅玩转Linux">
+<meta name="twitter:description" content="前言个人的Linux捣腾经历要从大一开始， 但在大一后暑假通读了《Linux私房菜》之后才渐渐步入正规
+本文只是总结性地罗列了一些常用工具配置, 如果你才上手Linux或者遇到什么问题, 欢迎留言
+各发型版相比较而言， ArchLinux就像初恋一样， 充满了很多可能和新奇， 每一天都会是新鲜的。 而主打桌面的Ubuntu则更像贤妻良母(简单易上手).
+下面就从界面美化, 硬件性能, 开发环境 三">
+<meta name="twitter:image" content="http://rancho1110.com/./oh-my-zsh.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="伯爵在古堡" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/green/pace-theme-center-atom.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>优雅玩转Linux | 伯爵在古堡</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a368d89b0fb146bd737dc9e2c158260a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Rancho</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">爱和死亡留给上帝。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/about.html">古堡攻略</a></li>
+                        
+                            <li><a href="/archives">/*所有*/</a></li>
+                        
+                            <li><a href="/categories/随笔">/*随笔*/</a></li>
+                        
+                            <li><a href="/categories/札记">/*札记*/</a></li>
+                        
+                            <li><a href="/404.html">无疆之域</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OGRE/">OGRE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack-style/">hack-style</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/宗教/">宗教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建筑/">建筑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/政治/">政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文明/">文明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/法律/">法律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机体系/">计算机体系</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://segmentfault.com/">SegmentFault</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.codingpy.com/">编程派</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Rancho</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Rancho</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">爱和死亡留给上帝。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/about.html">古堡攻略</a></li>
+                
+                    <li><a href="/archives">/*所有*/</a></li>
+                
+                    <li><a href="/categories/随笔">/*随笔*/</a></li>
+                
+                    <li><a href="/categories/札记">/*札记*/</a></li>
+                
+                    <li><a href="/404.html">无疆之域</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" target="_blank" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-优雅玩转Linux" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/01/优雅玩转Linux/" class="article-date">
+      <time datetime="2016-05-31T17:53:00.000Z" itemprop="datePublished">2016-06-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      优雅玩转Linux
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/札记/">札记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>个人的Linux捣腾经历要从大一开始， 但在大一后暑假通读了《Linux私房菜》之后才渐渐步入正规</p>
+<p>本文只是总结性地罗列了一些常用工具配置, 如果你才上手Linux或者遇到什么问题, 欢迎留言</p>
+<p>各发型版相比较而言， ArchLinux就像初恋一样， 充满了很多可能和新奇， 每一天都会是新鲜的。 而主打桌面的Ubuntu则更像贤妻良母(简单易上手).</p>
+<p>下面就从<code>界面美化</code>, <code>硬件性能</code>, <code>开发环境</code> 三方面</p>
+<a id="more"></a>
+<h1 id="基本篇-基本的配置和工具"><a href="#基本篇-基本的配置和工具" class="headerlink" title="基本篇: 基本的配置和工具"></a>基本篇: 基本的配置和工具</h1><h2 id="双系统的八小时时差"><a href="#双系统的八小时时差" class="headerlink" title="双系统的八小时时差"></a>双系统的八小时时差</h2><pre><code>sudo vim /etc/default/rcS
+utc=no                      # 注释掉
+</code></pre><p>然后记得自动挂载常用的windows分区</p>
+<h2 id="CPU频率"><a href="#CPU频率" class="headerlink" title="CPU频率"></a>CPU频率</h2><pre><code>sudo add-apt-repository ppa:atareao/atareao
+sudo apt-get install indicator-cpufreq
+</code></pre><h2 id="系统监控"><a href="#系统监控" class="headerlink" title="系统监控"></a>系统监控</h2><p><a href="https://github.com/fossfreedom/indicator-sysmonitor" target="_blank" rel="external">indicator-sysmonitor</a></p>
+<pre><code>sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
+sudo apt-get update
+sudo apt-get install indicator-sysmonitor
+</code></pre><h2 id="电源管理-TLP"><a href="#电源管理-TLP" class="headerlink" title="电源管理 TLP"></a>电源管理 TLP</h2><pre><code>sudo add-apt-repository ppa:linrunner/tlp
+sudo apt-get update
+sudo apt-get install tlp tlp-rdw
+sudo tlp start
+</code></pre><h2 id="校园网必备"><a href="#校园网必备" class="headerlink" title="校园网必备"></a>校园网必备</h2><p>OpenKeeper</p>
+<h2 id="开无线"><a href="#开无线" class="headerlink" title="开无线"></a>开无线</h2><p><a href="http://www.wuji8.com/meta/6685226.html" target="_blank" rel="external">创建WIFI</a></p>
+<h2 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h2><pre><code>wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+</code></pre><p>flash plugin</p>
+<pre><code>sudo apt-get install pepperflashplugin-nonfree
+sudo update-pepperflashplugin-nonfree --install
+</code></pre><h2 id="翻墙"><a href="#翻墙" class="headerlink" title="翻墙"></a>翻墙</h2><p><a href="https://github.com/getlantern/lantern" target="_blank" rel="external">Lantern</a><br><a href="http://laod.cn/hosts/2016-google-hosts.html" target="_blank" rel="external">hosts</a></p>
+<h2 id="额外的解码器"><a href="#额外的解码器" class="headerlink" title="额外的解码器"></a>额外的解码器</h2><pre><code>sudo apt-get install ubuntu-restricted-extras
+</code></pre><h2 id="中文输入法"><a href="#中文输入法" class="headerlink" title="中文输入法"></a>中文输入法</h2><p><a href="http://pinyin.sogou.com/linux/?r=pinyin" target="_blank" rel="external">搜狗输入法</a></p>
+<h2 id="用户子目录改成英文"><a href="#用户子目录改成英文" class="headerlink" title="用户子目录改成英文"></a>用户子目录改成英文</h2><pre><code>export LANG=en_US
+xdg-user-dirs-gtk-update
+同意对话框询问, 然后改回中文包
+export LANG=zh_CN
+</code></pre><h2 id="hg-command"><a href="#hg-command" class="headerlink" title="hg command"></a>hg command</h2><pre><code>sudo apt-get install mercurial
+</code></pre><h2 id="更多软件源"><a href="#更多软件源" class="headerlink" title="更多软件源"></a>更多软件源</h2><pre><code>修改软件源并且增加 Canonical Parters, 然后更新包信息
+sudo apt-get update&amp;&amp;sudo apt-get upgrade
+</code></pre><h1 id="界面篇-更加人性的流畅体验"><a href="#界面篇-更加人性的流畅体验" class="headerlink" title="界面篇: 更加人性的流畅体验"></a>界面篇: 更加人性的流畅体验</h1><p>Linux下可选择desktop不少</p>
+<h2 id="KDE"><a href="#KDE" class="headerlink" title="KDE"></a>KDE</h2><ul>
+<li>优点: 高度可定制, 好看</li>
+<li>缺点: 组件(如kmail)对普通用户略复杂</li>
+</ul>
+<blockquote>
+<p>KDE 是所有桌面环境中最易定制的，如同其他桌面环境一样你需要一些插件，小工具，配置工具来定制你的环境，KDE 把所有这些插件和工具都打包到系统设置里面。有了高级配置管理器，所有用户需求都可以被定制而不需要任何三方工具来美化和配置。<br>伴随着许多改进，KDE 的 Plasma5 算得上是最先进的 DE，它主要专注于视觉体验(更好的 launcher，菜单以及通知)和不同设备之间的易用性。Plasma 与老的或低配的硬件也更快更兼容</p>
+</blockquote>
+<h2 id="MATE"><a href="#MATE" class="headerlink" title="MATE"></a>MATE</h2><ul>
+<li>优点: 轻量级</li>
+<li>缺点: 基于已不再维护的Gnome2的某个分支?</li>
+</ul>
+<h2 id="Cinnamon"><a href="#Cinnamon" class="headerlink" title="Cinnamon"></a>Cinnamon</h2><ul>
+<li>优点: 极致优美, 上手简单, 高度可定制</li>
+<li>缺点: 年轻, 还有一些Bug</li>
+</ul>
+<blockquote>
+<p>Cinnamon 是继 MATE 之后，Linux Mint Team 为那些看不惯 Gnome 的用户创建基于 Gnome 3 的桌面环境。Cinnamon 很新，开发非常活跃<br>Cinnamon 具有像 Gnome 和 Unity 这样的桌面环境所不具备的所有功能。Cinnamon 是个高度可定制的桌面环境，并且不需要任何额外的插件、小工具和配置工具来定制桌面。Cinnamon 可以通过内置的配置管理器下载并安装主题，完全不需要打开网络浏览器。<br>通过这些惊艳的和必备的功能，Cinnamon 对任何 Linux 新用户来说都非常方便。</p>
+</blockquote>
+<h2 id="Gnome"><a href="#Gnome" class="headerlink" title="Gnome"></a>Gnome</h2><ul>
+<li>优点: 元老级, 你懂的</li>
+<li>缺点: 插件管理弱爆, 特性很少</li>
+</ul>
+<blockquote>
+<p>Gnome 的第一个发布版本是在 1999 年, 提供了一个简单和经典的桌面体验，它没有足够的自定义选项。但是在 2011 年 Gnome 介绍了新的设计 GNOME 3，传统的桌面环境已经被 GNOME Shell 替代。这次终结引起了 Gnome 用户和很多开发者的不满，这种不满导致许多其他 DEs 被创造出来，例如 MAT E和 Cinnamon。<br>Gnome 是 Fedora 的默认桌面环境，在几个流行的 Linux 发行版中都可以见到她的身影，例如，Ubuntu，Debian，OpenSUSE 和更多的发行版。</p>
+</blockquote>
+<h2 id="Unity"><a href="#Unity" class="headerlink" title="Unity"></a>Unity</h2><ul>
+<li>优点: 直观, 类似 HUD 的新技术, 通过第三方应用支持自定义</li>
+<li>缺点: ,丑陋实现的通知功能, 非常有限的自定义工具, 前后矛盾的 UI</li>
+</ul>
+<h2 id="苹果风"><a href="#苹果风" class="headerlink" title="苹果风"></a>苹果风</h2><p><a href="https://github.com/lijianying10/FixLinux/blob/master/prob/MacTheme.md" target="_blank" rel="external">Mac主题</a><br>替换Ubuntu桌面: 中文路径对应 zh_CN</p>
+<pre><code>cd /usr/share/locale/zh_CN/LC_MESSAGES; sudo msgfmt -o unity.mo ~/Mac.po;rm ~/Mac.po;cd
+</code></pre><p>Docky 个人感觉很鸡肋</p>
+<h2 id="亮度调节"><a href="#亮度调节" class="headerlink" title="亮度调节"></a>亮度调节</h2><p><a href="http://itsfoss.com/fix-brightness-ubuntu-1310/" target="_blank" rel="external">亮度设置</a></p>
+<h2 id="绿色护眼"><a href="#绿色护眼" class="headerlink" title="绿色护眼"></a>绿色护眼</h2><pre><code>cd /usr/share/themes/_THEME/gtk-3.0
+sudo gedit gtk-main.css
+把base_color 设置成 #CCE8CF
+</code></pre><h2 id="色温神器"><a href="#色温神器" class="headerlink" title="色温神器"></a>色温神器</h2><p><a href="https://justgetflux.com/linux.html" target="_blank" rel="external">F.lux</a></p>
+<pre><code>sudo add-apt-repository ppa:kilian/f.lux
+sudo apt-get update
+sudo apt-get install fluxgui
+或者
+sudo apt-get install python-glade2 python-appindicator
+git clone https://github.com/Kilian/f.lux-indicator-applet.git flux
+cd flux
+chmod +x setup.py
+sudo python ./setup.py install
+sudo chmod 755 /usr/local/bin/xflux
+fluxgui
+</code></pre><h1 id="开发篇-迈向大牛的基本阶梯"><a href="#开发篇-迈向大牛的基本阶梯" class="headerlink" title="开发篇: 迈向大牛的基本阶梯"></a>开发篇: 迈向大牛的基本阶梯</h1><h2 id="首先-关于字体"><a href="#首先-关于字体" class="headerlink" title="首先, 关于字体"></a>首先, 关于字体</h2><ul>
+<li>YaHei Consolas Hybrid</li>
+<li>Source Code Pro</li>
+<li>Andale Mono</li>
+<li>Inconsolate</li>
+</ul>
+<p>习惯了Consolas但很可惜的是渲染效果没windows下好</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 示例</span></div><div class="line"><span class="comment"># 解压压缩包</span></div><div class="line">tar -zxvf YaHeiConsolas.tar.gz</div><div class="line"> <span class="comment">#在系统目录下创建自定义字体目录</span></div><div class="line">sudo mkdir -p /usr/share/fonts/vista</div><div class="line"><span class="comment"># 复制解压出来的字体到刚才创建的目录</span></div><div class="line">sudo cp YaHeiConsolas.ttf /usr/share/fonts/vista/</div><div class="line"><span class="comment"># 修改字体权限</span></div><div class="line">sudo chmod 644 /usr/share/fonts/vista/*.ttf</div><div class="line"><span class="comment"># 进入字体目录</span></div><div class="line"><span class="built_in">cd</span> /usr/share/fonts/vista/</div><div class="line"><span class="comment"># 刷新并安装字体</span></div><div class="line">sudo mkfontscale &amp;&amp; sudo mkfontdir &amp;&amp; sudo <span class="built_in">fc</span>-cache -fv</div></pre></td></tr></table></figure>
+<h2 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h2><h3 id="oh-my-zsh"><a href="#oh-my-zsh" class="headerlink" title="oh-my-zsh "></a><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh </a></h3><p>力荐主题: agnoster<br><img src="./oh-my-zsh.png" alt="oh-my-zsh"></p>
+<h3 id="修改终端的默认位置"><a href="#修改终端的默认位置" class="headerlink" title="修改终端的默认位置"></a>修改终端的默认位置</h3><pre><code>$ xwininfo              并单击终端以获取当前窗口信息
+$ vim ~/.zshrc
+添加启动参数
+alias gnome-terminal=&quot;gnome-terminal --geometry 80x32+624+187&quot;
+</code></pre><p>当然, 也可以新建一个快捷键(System -&gt; Preferences -&gt; keyboard Shortcuts)<br>然后把它放进去</p>
+<h3 id="调教一下"><a href="#调教一下" class="headerlink" title="调教一下"></a>调教一下</h3><pre><code># 别名设置
+# 比如刚才的终端位置就可以这样
+alias gnome-terminal=&quot;gnome-terminal --geometry 80x32+630+222&quot;
+# 终端打开图形化文件管理器
+alias xdir=&quot;xdg-open .&quot;
+# 再比如, 后台启动 lantern 并丢弃输出
+alias lantern=&quot;nohup lantern &gt; /dev/null &amp;&quot;
+# nohup 默认会把输出定位到 nohup.out
+</code></pre><h2 id="Vim"><a href="#Vim" class="headerlink" title="Vim"></a>Vim</h2><p>这里有<a href="http://coolshell.cn/articles/5426.html" target="_blank" rel="external">练级攻略</a></p>
+<h2 id="WakaTime"><a href="#WakaTime" class="headerlink" title="WakaTime"></a>WakaTime</h2><p><a href="https://wakatime.com/dashboard" target="_blank" rel="external">WakaTime</a></p>
+<h2 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text"></a>Sublime Text</h2><p>先晒图<br><img src="./sublime.png" alt="sublime"></p>
+<p>关于插件网上满地都是, 我就不赘述了<br>这里挑几个罗列下</p>
+<ul>
+<li>主题和配色: 我的改过<ul>
+<li>Material</li>
+<li>Color-Scheme</li>
+</ul>
+</li>
+<li>提高效率<ul>
+<li>SublimeTmpl</li>
+<li>Sidebar Enhancements</li>
+</ul>
+</li>
+<li>Python<ul>
+<li>Anaconda</li>
+</ul>
+</li>
+<li>特别是<ul>
+<li>PlainTasks<br><img src="./plaintasks.png" alt="PlainTasks"></li>
+</ul>
+</li>
+</ul>
+<h2 id="Nodejs"><a href="#Nodejs" class="headerlink" title="Nodejs"></a>Nodejs</h2><p><a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a><br><a href="https://github.com/npm/npm" target="_blank" rel="external">npm</a></p>
+<h2 id="CMAKE"><a href="#CMAKE" class="headerlink" title="CMAKE"></a>CMAKE</h2><p><a href="https://cmake.org/download/" target="_blank" rel="external">CMAKE</a> 选择你要的版本并下载</p>
+<pre><code>wget http://www.cmake.org/files/v3.5/cmake-3.x.x.tar.gz    # 或者直接点击下载
+tar xvf cmake-3.x.x.tar.gz
+cd cmake-3.x.x
+./configure
+make                  # 加上 -j4 可以多线程编译 (CPU核数两倍为宜, 并非越多越好)
+sudo make install
+</code></pre><p>等等..</p>
+<h1 id="关于备份"><a href="#关于备份" class="headerlink" title="关于备份"></a>关于备份</h1><p>有的人会这么做<br>    cd /etc<br>    git init<br>    git add ./*<br>    git commit -m “backup”</p>
+<p>也有这样的<a href="">备份</a></p>
+<h1 id="other-list"><a href="#other-list" class="headerlink" title="other list"></a>other list</h1><p><a href="https://github.com/zonyitoo/doubanfm-qt" target="_blank" rel="external">豆瓣FM QT客户端</a><br><a href="https://chrome.google.com/webstore/detail/%E9%AB%98%E5%93%81%E8%B4%A8%E8%B1%86%E7%93%A3fm/pdgnopcbjjdkdeaimdbncphhcgjaaifi" target="_blank" rel="external">豆瓣FM高品质</a><br><a href="http://www.xmindchina.net/" target="_blank" rel="external">思维导图: XMind</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/06/01/优雅玩转Linux/">优雅玩转Linux</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Rancho</a></p>
+        <p><span>发布时间:</span>2016-06-01, 01:53:00</p>
+        <p><span>最后更新:</span>2016-07-05, 00:00:00</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/06/01/优雅玩转Linux/" title="优雅玩转Linux">http://rancho1110.com/2016/06/01/优雅玩转Linux/</a>
+            <span class="copy-path" data-clipboard-text="原文:  http://rancho1110.com/2016/06/01/优雅玩转Linux/　　作者:  Rancho" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> 转载注明作者及原始链接
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/07/26/Python杂症之编码/">
+                    Python杂症之编码
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/05/22/中西方建筑特征/">
+                    中西方建筑特征
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本篇-基本的配置和工具"><span class="toc-number">2.</span> <span class="toc-text">基本篇: 基本的配置和工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#双系统的八小时时差"><span class="toc-number">2.1.</span> <span class="toc-text">双系统的八小时时差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CPU频率"><span class="toc-number">2.2.</span> <span class="toc-text">CPU频率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统监控"><span class="toc-number">2.3.</span> <span class="toc-text">系统监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电源管理-TLP"><span class="toc-number">2.4.</span> <span class="toc-text">电源管理 TLP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#校园网必备"><span class="toc-number">2.5.</span> <span class="toc-text">校园网必备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开无线"><span class="toc-number">2.6.</span> <span class="toc-text">开无线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chrome"><span class="toc-number">2.7.</span> <span class="toc-text">chrome</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#翻墙"><span class="toc-number">2.8.</span> <span class="toc-text">翻墙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#额外的解码器"><span class="toc-number">2.9.</span> <span class="toc-text">额外的解码器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中文输入法"><span class="toc-number">2.10.</span> <span class="toc-text">中文输入法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户子目录改成英文"><span class="toc-number">2.11.</span> <span class="toc-text">用户子目录改成英文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hg-command"><span class="toc-number">2.12.</span> <span class="toc-text">hg command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多软件源"><span class="toc-number">2.13.</span> <span class="toc-text">更多软件源</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#界面篇-更加人性的流畅体验"><span class="toc-number">3.</span> <span class="toc-text">界面篇: 更加人性的流畅体验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#KDE"><span class="toc-number">3.1.</span> <span class="toc-text">KDE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MATE"><span class="toc-number">3.2.</span> <span class="toc-text">MATE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cinnamon"><span class="toc-number">3.3.</span> <span class="toc-text">Cinnamon</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gnome"><span class="toc-number">3.4.</span> <span class="toc-text">Gnome</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unity"><span class="toc-number">3.5.</span> <span class="toc-text">Unity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#苹果风"><span class="toc-number">3.6.</span> <span class="toc-text">苹果风</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#亮度调节"><span class="toc-number">3.7.</span> <span class="toc-text">亮度调节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绿色护眼"><span class="toc-number">3.8.</span> <span class="toc-text">绿色护眼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#色温神器"><span class="toc-number">3.9.</span> <span class="toc-text">色温神器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开发篇-迈向大牛的基本阶梯"><span class="toc-number">4.</span> <span class="toc-text">开发篇: 迈向大牛的基本阶梯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#首先-关于字体"><span class="toc-number">4.1.</span> <span class="toc-text">首先, 关于字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zsh"><span class="toc-number">4.2.</span> <span class="toc-text">zsh</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#oh-my-zsh"><span class="toc-number">4.2.1.</span> <span class="toc-text">oh-my-zsh </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改终端的默认位置"><span class="toc-number">4.2.2.</span> <span class="toc-text">修改终端的默认位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调教一下"><span class="toc-number">4.2.3.</span> <span class="toc-text">调教一下</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vim"><span class="toc-number">4.3.</span> <span class="toc-text">Vim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WakaTime"><span class="toc-number">4.4.</span> <span class="toc-text">WakaTime</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sublime-Text"><span class="toc-number">4.5.</span> <span class="toc-text">Sublime Text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nodejs"><span class="toc-number">4.6.</span> <span class="toc-text">Nodejs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CMAKE"><span class="toc-number">4.7.</span> <span class="toc-text">CMAKE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关于备份"><span class="toc-number">5.</span> <span class="toc-text">关于备份</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#other-list"><span class="toc-number">6.</span> <span class="toc-text">other list</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-6 i,
+        .toc-level-6 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/06/01/优雅玩转Linux/" data-title="优雅玩转Linux" data-url="http://rancho1110.com/2016/06/01/优雅玩转Linux/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"rancho1110"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/07/26/Python杂症之编码/" title="上一篇: Python杂症之编码">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/05/22/中西方建筑特征/" title="下一篇: 中西方建筑特征">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/01/伙伴分配器的极简实现/">伙伴分配器的极简实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/宏孩儿的前世今生/">宏孩儿的前世今生</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/Python进阶之旅/">Python进阶之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/01/凌晨两点/">凌晨两点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/破解开启WPS的WIFI密码/">破解带WPA的WI-FI密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/27/Arch不只是初恋/">Arch: 不只是初恋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/Python杂症之编码/">Python杂症之编码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/优雅玩转Linux/">优雅玩转Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/中西方建筑特征/">中西方建筑特征</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/西方私法文明/">西方私法文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/网络编程基础/">网络编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/西方政治文明/">西方政治文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/运行时环境/">运行时环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/西方文明概说/">西方文明概说</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/04/文明的内涵/">文明的内涵</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/计算机系统漫游/">计算机系统漫游</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/11/编译原理之概论/">编译原理之概论</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/ORGE引擎编译及配置/">ORGE引擎编译及配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/01/hexo常用命令/">Hexo常用命令</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2016 Rancho
+            </div>
+            <div class="footer-right">
+                Powered By <a href="http://hexo.io/" target="_blank" title="Powerful Blog Framework">Hexo</a>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 14;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Rancho" />
+
+
+
+<meta name="description" content="前言花了一个下午多的时间看完了Intermediate Python 的中文译本, 在此稍作整理和总结. 按照个人的理解重新分门别类, 同时会加入辅助例程和其他深入探究, 细节上有任何新发现都会直接加进来(不保证行文的流畅..), 任何问题欢迎留言讨论.
+
+感谢中文译本的翻译人员老高 @spawnris刘宇 @liuyu明源 @muxueqz大牙 @suqi蒋委员长 @jiedo欢迎提交Issue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python进阶之旅">
+<meta property="og:url" content="http://rancho1110.com/2016/09/20/Python进阶之旅/index.html">
+<meta property="og:site_name" content="伯爵在古堡">
+<meta property="og:description" content="前言花了一个下午多的时间看完了Intermediate Python 的中文译本, 在此稍作整理和总结. 按照个人的理解重新分门别类, 同时会加入辅助例程和其他深入探究, 细节上有任何新发现都会直接加进来(不保证行文的流畅..), 任何问题欢迎留言讨论.
+
+感谢中文译本的翻译人员老高 @spawnris刘宇 @liuyu明源 @muxueqz大牙 @suqi蒋委员长 @jiedo欢迎提交Issue">
+<meta property="og:updated_time" content="2016-10-01T04:52:45.346Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python进阶之旅">
+<meta name="twitter:description" content="前言花了一个下午多的时间看完了Intermediate Python 的中文译本, 在此稍作整理和总结. 按照个人的理解重新分门别类, 同时会加入辅助例程和其他深入探究, 细节上有任何新发现都会直接加进来(不保证行文的流畅..), 任何问题欢迎留言讨论.
+
+感谢中文译本的翻译人员老高 @spawnris刘宇 @liuyu明源 @muxueqz大牙 @suqi蒋委员长 @jiedo欢迎提交Issue">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="伯爵在古堡" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/green/pace-theme-center-atom.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Python进阶之旅 | 伯爵在古堡</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a368d89b0fb146bd737dc9e2c158260a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Rancho</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">爱和死亡留给上帝。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/about.html">古堡攻略</a></li>
+                        
+                            <li><a href="/archives">/*所有*/</a></li>
+                        
+                            <li><a href="/categories/随笔">/*随笔*/</a></li>
+                        
+                            <li><a href="/categories/札记">/*札记*/</a></li>
+                        
+                            <li><a href="/404.html">无疆之域</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OGRE/">OGRE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack-style/">hack-style</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/宗教/">宗教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建筑/">建筑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/政治/">政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文明/">文明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/法律/">法律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机体系/">计算机体系</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://segmentfault.com/">SegmentFault</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.codingpy.com/">编程派</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Rancho</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Rancho</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">爱和死亡留给上帝。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/about.html">古堡攻略</a></li>
+                
+                    <li><a href="/archives">/*所有*/</a></li>
+                
+                    <li><a href="/categories/随笔">/*随笔*/</a></li>
+                
+                    <li><a href="/categories/札记">/*札记*/</a></li>
+                
+                    <li><a href="/404.html">无疆之域</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" target="_blank" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Python进阶之旅" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/20/Python进阶之旅/" class="article-date">
+      <time datetime="2016-09-20T12:23:52.000Z" itemprop="datePublished">2016-09-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python进阶之旅
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/札记/">札记</a><a class="article-category-link" href="/categories/札记/进阶之旅/">进阶之旅</a><a class="article-category-link" href="/categories/札记/进阶之旅/0x00/">0x00</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>花了一个下午多的时间看完了<a href="http://book.pythontips.com/en/latest/" target="_blank" rel="external">Intermediate Python</a> 的<a href="http://docs.pythontab.com/interpy/" target="_blank" rel="external">中文译本</a>, 在此稍作整理和总结. 按照个人的理解重新分门别类, 同时会加入辅助例程和其他深入探究, 细节上有任何新发现都会直接加进来(不保证行文的流畅..), 任何问题欢迎留言讨论.</p>
+<blockquote>
+<p>感谢中文译本的翻译人员<br>老高 @spawnris<br>刘宇 @liuyu<br>明源 @muxueqz<br>大牙 @suqi<br>蒋委员长 @jiedo<br>欢迎提交<a href="https://github.com/eastlakeside/interpy-zh/issues" target="_blank" rel="external">Issues</a></p>
+</blockquote>
+<p>本文虽然名为进阶, 但完全适合仅了解基本语法的Green Man, 部分特性会结合3.5的源码加以深入, 刨根问底. 通篇文章很长, 但绝对值得花上几个小时细细一读, 你要明白, 阅读任何干货, 无思考, 不吸收.</p>
+<a id="more"></a>
+<p>总的来讲, Python高级语法无外乎生成器, 装饰器, 上下文管理, 以及一些函数式编程的特性, 以及数据结构和性能优化方面的东西</p>
+<h3 id="旅程导航"><a href="#旅程导航" class="headerlink" title="旅程导航"></a>旅程导航</h3><ul>
+<li><a href="">函数式编程</a><ul>
+<li>参数机制</li>
+<li>内置函数</li>
+</ul>
+</li>
+<li>优雅语法糖<ul>
+<li>装饰器</li>
+<li>推导式</li>
+<li>上下文管理</li>
+<li>其他语法细节<ul>
+<li>三元运算符</li>
+<li>for/else</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>高效内存<ul>
+<li>生成器</li>
+<li>协程</li>
+<li><strong>slots</strong></li>
+</ul>
+</li>
+<li>数据结构<ul>
+<li>set</li>
+<li>容器</li>
+<li>枚举</li>
+</ul>
+</li>
+<li>面向应用<ul>
+<li>虚拟环境</li>
+<li>版本兼容</li>
+<li>一行式</li>
+<li>C扩展</li>
+<li>调试</li>
+</ul>
+</li>
+<li>其他主题<ul>
+<li>函数缓存</li>
+</ul>
+</li>
+</ul>
+<p>以下内容没有具体涉及, 有需要自行阅读</p>
+<ul>
+<li><a href="http://docs.pythontab.com/interpy/global_return/README/" target="_blank" rel="external">Global和Return</a></li>
+<li><a href="http://docs.pythontab.com/interpy/Mutation/README/" target="_blank" rel="external">对象变动 Mutation</a></li>
+<li><a href="http://docs.pythontab.com/interpy/introspection/README/" target="_blank" rel="external">对象自省</a></li>
+<li><a href="http://docs.pythontab.com/interpy/exception/README/" target="_blank" rel="external">异常</a></li>
+<li><a href="http://docs.pythontab.com/interpy/Lambdas/README/" target="_blank" rel="external">lambda表达式</a></li>
+</ul>
+<h3 id="其他推荐"><a href="#其他推荐" class="headerlink" title="其他推荐"></a>其他推荐</h3><p>如果这些内容对你而言已经too ez, 那推荐两本高级读物</p>
+<ul>
+<li><a href="https://book.douban.com/subject/4212921/" target="_blank" rel="external">Python高级编程</a>(年代稍微久远了一点)</li>
+<li><a href="https://book.douban.com/subject/26389274/" target="_blank" rel="external">Python高手之路</a>(15年刚出的, 面向应用和工程)</li>
+</ul>
+<p>ps. 如果都不在话下, 嗯.. 暂时应该不会有这样的访客..</p>
+<p align="center"><br><a href="http://rancho1110.com/2016/09/21/函数式编程/">后续传送门: 0x01函数式编程</a><br></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/20/Python进阶之旅/">Python进阶之旅</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Rancho</a></p>
+        <p><span>发布时间:</span>2016-09-20, 20:23:52</p>
+        <p><span>最后更新:</span>2016-10-01, 12:52:45</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/20/Python进阶之旅/" title="Python进阶之旅">http://rancho1110.com/2016/09/20/Python进阶之旅/</a>
+            <span class="copy-path" data-clipboard-text="原文:  http://rancho1110.com/2016/09/20/Python进阶之旅/　　作者:  Rancho" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> 转载注明作者及原始链接
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/09/21/函数式编程/">
+                    函数式编程
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/09/01/凌晨两点/">
+                    凌晨两点
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#旅程导航"><span class="toc-number">2.</span> <span class="toc-text">旅程导航</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他推荐"><span class="toc-number">3.</span> <span class="toc-text">其他推荐</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-6 i,
+        .toc-level-6 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/20/Python进阶之旅/" data-title="Python进阶之旅" data-url="http://rancho1110.com/2016/09/20/Python进阶之旅/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"rancho1110"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/09/21/函数式编程/" title="上一篇: 函数式编程">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/09/01/凌晨两点/" title="下一篇: 凌晨两点">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/01/伙伴分配器的极简实现/">伙伴分配器的极简实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/宏孩儿的前世今生/">宏孩儿的前世今生</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/Python进阶之旅/">Python进阶之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/01/凌晨两点/">凌晨两点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/破解开启WPS的WIFI密码/">破解带WPA的WI-FI密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/27/Arch不只是初恋/">Arch: 不只是初恋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/Python杂症之编码/">Python杂症之编码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/优雅玩转Linux/">优雅玩转Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/中西方建筑特征/">中西方建筑特征</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/西方私法文明/">西方私法文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/网络编程基础/">网络编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/西方政治文明/">西方政治文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/运行时环境/">运行时环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/西方文明概说/">西方文明概说</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/04/文明的内涵/">文明的内涵</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/计算机系统漫游/">计算机系统漫游</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/11/编译原理之概论/">编译原理之概论</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/ORGE引擎编译及配置/">ORGE引擎编译及配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/01/hexo常用命令/">Hexo常用命令</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2016 Rancho
+            </div>
+            <div class="footer-right">
+                Powered By <a href="http://hexo.io/" target="_blank" title="Powerful Blog Framework">Hexo</a>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 14;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>

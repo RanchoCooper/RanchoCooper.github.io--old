@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Rancho" />
+
+
+
+<meta name="description" content="话说程序员的三大浪漫(骗局): 汇编, 操作系统, 编译原理.
+这学期开始体验最后一项了, 可惜之前米老师的课程因为少听了几节没跟上节奏, 希望现在自己看龙书能把相应的东西给补上来的
+龙书各个章节的概要:1 给出一些计算机体系结构和程序设计语言原则的背景知识2 介绍很多重要概念, 并开发一个小型的编译器3 讨论词法分析, 正则表达式, 有穷状态机和词法分析器的生成器工具.4 讨论主流语法分析方法,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理之概论">
+<meta property="og:url" content="http://rancho1110.com/2016/04/11/编译原理之概论/index.html">
+<meta property="og:site_name" content="伯爵在古堡">
+<meta property="og:description" content="话说程序员的三大浪漫(骗局): 汇编, 操作系统, 编译原理.
+这学期开始体验最后一项了, 可惜之前米老师的课程因为少听了几节没跟上节奏, 希望现在自己看龙书能把相应的东西给补上来的
+龙书各个章节的概要:1 给出一些计算机体系结构和程序设计语言原则的背景知识2 介绍很多重要概念, 并开发一个小型的编译器3 讨论词法分析, 正则表达式, 有穷状态机和词法分析器的生成器工具.4 讨论主流语法分析方法,">
+<meta property="og:image" content="http://rancho1110.com/./语言处理系统.png">
+<meta property="og:image" content="http://rancho1110.com/./编译器各步骤.png">
+<meta property="og:image" content="http://rancho1110.com/./完整翻译过程.png">
+<meta property="og:image" content="http://rancho1110.com/./编译器构造工具.png">
+<meta property="og:updated_time" content="2016-07-03T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编译原理之概论">
+<meta name="twitter:description" content="话说程序员的三大浪漫(骗局): 汇编, 操作系统, 编译原理.
+这学期开始体验最后一项了, 可惜之前米老师的课程因为少听了几节没跟上节奏, 希望现在自己看龙书能把相应的东西给补上来的
+龙书各个章节的概要:1 给出一些计算机体系结构和程序设计语言原则的背景知识2 介绍很多重要概念, 并开发一个小型的编译器3 讨论词法分析, 正则表达式, 有穷状态机和词法分析器的生成器工具.4 讨论主流语法分析方法,">
+<meta name="twitter:image" content="http://rancho1110.com/./语言处理系统.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="伯爵在古堡" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/green/pace-theme-center-atom.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>编译原理之概论 | 伯爵在古堡</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a368d89b0fb146bd737dc9e2c158260a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Rancho</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">爱和死亡留给上帝。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/about.html">古堡攻略</a></li>
+                        
+                            <li><a href="/archives">/*所有*/</a></li>
+                        
+                            <li><a href="/categories/随笔">/*随笔*/</a></li>
+                        
+                            <li><a href="/categories/札记">/*札记*/</a></li>
+                        
+                            <li><a href="/404.html">无疆之域</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OGRE/">OGRE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack-style/">hack-style</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/宗教/">宗教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建筑/">建筑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/政治/">政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文明/">文明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/法律/">法律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机体系/">计算机体系</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://segmentfault.com/">SegmentFault</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.codingpy.com/">编程派</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Rancho</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Rancho</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">爱和死亡留给上帝。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/about.html">古堡攻略</a></li>
+                
+                    <li><a href="/archives">/*所有*/</a></li>
+                
+                    <li><a href="/categories/随笔">/*随笔*/</a></li>
+                
+                    <li><a href="/categories/札记">/*札记*/</a></li>
+                
+                    <li><a href="/404.html">无疆之域</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" target="_blank" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-编译原理之概论" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/11/编译原理之概论/" class="article-date">
+      <time datetime="2016-04-10T17:12:17.000Z" itemprop="datePublished">2016-04-11</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      编译原理之概论
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/札记/">札记</a><a class="article-category-link" href="/categories/札记/编译原理/">编译原理</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>话说程序员的三大浪漫(骗局): <strong>汇编, 操作系统, 编译原理.</strong></p>
+<p>这学期开始体验最后一项了, 可惜之前米老师的课程因为少听了几节没跟上节奏, 希望现在自己看龙书能把相应的东西给补上来的</p>
+<p>龙书各个章节的概要:<br>1 给出一些计算机体系结构和程序设计语言原则的背景知识<br>2 介绍很多重要概念, 并开发一个小型的编译器<br>3 讨论词法分析, 正则表达式, 有穷状态机和词法分析器的生成器工具.<br>4 讨论主流语法分析方法, 包括自顶向下方法(递归下降, LL技术) 和自底向上方法(LR技术和它的变体)<br>5 介绍语法制导定义和语法制导翻译的基本思想<br>6 使用5中的理论, 说明如何使用并为典型的程序设计语言来生成中间代码<br>7 讨论运行时环境, 特别是运行时栈的管理和垃圾回收机制<br>8 讨论目标代码生成技术, 包括基本块的构造, 从表达式和基本块生成代码的方法, 以及寄存器分配技术<br>9 介绍代码优化技术, 包括流图, 数据流分析框架以及求解这些框架的迭代算法<br>10 讨论指令级优化, 重点是从小段指令代码中抽取并行性, 并在单处理器上调度这些指令<br>11 介绍大规模并行性的检测和使用, 重点是数值计算代码, 具有对多维数组进行遍历的紧致循环<br>12 介绍过程间分析技术, 将讨论指针分析, 别名和数据流分析, 要考虑到到达代码中某个给定点时的过程调用序列</p>
+<a id="more"></a>
+<h1 id="引论"><a href="#引论" class="headerlink" title="引论"></a>引论</h1><p>人们通过代码来指示计算机要完成的事情, 但是代码本身只描述了过程的逻辑形式, 它面向人类而非机器. 文本文件中的代码要先被翻译成二进制机器码, 才能在机器上执行. 而负责这项翻译工作的程序系统, 就是编译器.</p>
+<h1 id="语言处理器"><a href="#语言处理器" class="headerlink" title="语言处理器"></a>语言处理器</h1><p>简单地说, 编译器就是一个负责将某一种语言(源语言)翻译成另一个等价的语言(目标语言)的程序, 其重要任务之一就是报告在翻译过程中发现的错误.</p>
+<p><code>解释器</code> (interpreter)是另一种常见的语言处理器, 它并不通过翻译生成目标程序. 解释器逐行解释并执行代码, 通常认为它的错误诊断效果比编译器更好, 虽然牺牲了一定的执行速度.</p>
+<p>Java语言处理器结合了编译和解释过程, 它将源程序编译成高于机器码的字节码(bytecode)的中间表示形式, 并通过虚拟机(JVM)来执行. 其设计目的是为了更好地产生平台无关代码.</p>
+<p>通常一个语言处理系统还包括了</p>
+<ul>
+<li>预处理器(preprocessor): 负责聚合模块以及处理宏</li>
+<li>汇编器(assembler): 产生可重定位的机器代码</li>
+<li>链接器(linker): 将目标文件以及库文件连接到一起解决外部内存地址的问题</li>
+<li>加载器(loader): 将可执行文件放到内存中执行</li>
+</ul>
+<p><img src="./语言处理系统.png" alt="语言处理系统"></p>
+<h1 id="编译器的结构"><a href="#编译器的结构" class="headerlink" title="编译器的结构"></a>编译器的结构</h1><p>到现在, 我们对编译器的理解就是一个黑盒子, 能够把源程序映射为在语义上等价的目标程序. 更进一步, 我们可以把这个黑盒子分成两部分: 分析部分和综合部分</p>
+<ul>
+<li>分析(analysis)部分: 将源程序分解为多个组成要素, 并为之加上语法结构, 使用该语法结构来创建源程序的中间表示. 检查语法和语义, 同时收集有关的变量信息, 并存入符号表(symble table)中</li>
+<li>综合(synthesis)部分: 根据得到的中间表示和符号表来构造目标程序</li>
+</ul>
+<p><strong>编译器整体结构</strong></p>
+<p><img src="./编译器各步骤.png" alt="编译器各步骤"></p>
+<h2 id="词法分析-lexical-analysis"><a href="#词法分析-lexical-analysis" class="headerlink" title="词法分析(lexical analysis)"></a>词法分析(lexical analysis)</h2><p>词法分析器读入源程序的字符流, 并将其组织成有意义的词素(lexeme)的序列, 词法单元包括供语法分析使用的抽象符号和相应符号表中的条目.</p>
+<h2 id="语法分析-syntax-analysis"><a href="#语法分析-syntax-analysis" class="headerlink" title="语法分析(syntax analysis)"></a>语法分析(syntax analysis)</h2><p>由词法分析器产生的各个词法单元来创建中间表示, 语法树(syntax tree)</p>
+<h2 id="语义分析-semantic-analysis"><a href="#语义分析-semantic-analysis" class="headerlink" title="语义分析(semantic analysis)"></a>语义分析(semantic analysis)</h2><p>通过语法树和符号表来检查源程序是否符合语言的语义, 同时收集类型定义, 存放在语法树或符号表中. 类型检查(type checking)是语义分析的重要部分, 排查运算分量的是否匹配, 包括某些自动类型转换(coercion)</p>
+<h2 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h2><p>在这一步骤编译器将生成明确的低级语言, 它应该易于生成且能够被翻译为目标机器上的语言</p>
+<h2 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h2><p>机器无关的代码优化期望得到更好的目标代码. 更好通常意味着更快(节省时间), 但有时也指指令更短(节省空间)或能耗更低的目标代码</p>
+<h2 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h2><p>代码生成器以源程序的中间表示为输入, 并将其映射到目标语言. 如果目标语言是机器代码, 那就必须为程序的每个变量选择寄存器或内存位置</p>
+<p><img src="./完整翻译过程.png" alt="完整翻译过程"></p>
+<h1 id="生产效率"><a href="#生产效率" class="headerlink" title="生产效率"></a>生产效率</h1><p>程序是人类生产出的最复杂的工艺品, 包含的细节很多, 并且每一部分都必须是对的.</p>
+<p><code>编译器</code> 是一项庞大的软件工程, 开发编译器时开发人员也会充分利用现代软件开发环境, 包括编辑器, 调试器, 版本管理, 程序描述器, 测试管理等工具.<br>同时编译器开发人员还创建了专业工具来实现编译器的不同阶段. 这些工具都成功隐藏了生成算法的细节, 并易于集成.</p>
+<p><img src="./编译器构造工具.png" alt="编译器构造工具"></p>
+<p align="center"><br><a href="http://rancho1110.com">前文时光机</a><br></p><p align="center"><br><a href="http://rancho1110.com/2016/04/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/">后续传送门</a><br></p>
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/04/11/编译原理之概论/">编译原理之概论</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Rancho</a></p>
+        <p><span>发布时间:</span>2016-04-11, 01:12:17</p>
+        <p><span>最后更新:</span>2016-07-04, 00:00:00</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/04/11/编译原理之概论/" title="编译原理之概论">http://rancho1110.com/2016/04/11/编译原理之概论/</a>
+            <span class="copy-path" data-clipboard-text="原文:  http://rancho1110.com/2016/04/11/编译原理之概论/　　作者:  Rancho" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> 转载注明作者及原始链接
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/04/30/计算机系统漫游/">
+                    计算机系统漫游
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/04/07/ORGE引擎编译及配置/">
+                    ORGE引擎编译及配置
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引论"><span class="toc-number">1.</span> <span class="toc-text">引论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#语言处理器"><span class="toc-number">2.</span> <span class="toc-text">语言处理器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编译器的结构"><span class="toc-number">3.</span> <span class="toc-text">编译器的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#词法分析-lexical-analysis"><span class="toc-number">3.1.</span> <span class="toc-text">词法分析(lexical analysis)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法分析-syntax-analysis"><span class="toc-number">3.2.</span> <span class="toc-text">语法分析(syntax analysis)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语义分析-semantic-analysis"><span class="toc-number">3.3.</span> <span class="toc-text">语义分析(semantic analysis)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中间代码生成"><span class="toc-number">3.4.</span> <span class="toc-text">中间代码生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码优化"><span class="toc-number">3.5.</span> <span class="toc-text">代码优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码生成"><span class="toc-number">3.6.</span> <span class="toc-text">代码生成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生产效率"><span class="toc-number">4.</span> <span class="toc-text">生产效率</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-6 i,
+        .toc-level-6 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/04/11/编译原理之概论/" data-title="编译原理之概论" data-url="http://rancho1110.com/2016/04/11/编译原理之概论/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"rancho1110"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/04/30/计算机系统漫游/" title="上一篇: 计算机系统漫游">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/04/07/ORGE引擎编译及配置/" title="下一篇: ORGE引擎编译及配置">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/01/伙伴分配器的极简实现/">伙伴分配器的极简实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/宏孩儿的前世今生/">宏孩儿的前世今生</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/Python进阶之旅/">Python进阶之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/01/凌晨两点/">凌晨两点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/破解开启WPS的WIFI密码/">破解带WPA的WI-FI密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/27/Arch不只是初恋/">Arch: 不只是初恋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/Python杂症之编码/">Python杂症之编码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/优雅玩转Linux/">优雅玩转Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/中西方建筑特征/">中西方建筑特征</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/西方私法文明/">西方私法文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/网络编程基础/">网络编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/西方政治文明/">西方政治文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/运行时环境/">运行时环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/西方文明概说/">西方文明概说</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/04/文明的内涵/">文明的内涵</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/计算机系统漫游/">计算机系统漫游</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/11/编译原理之概论/">编译原理之概论</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/ORGE引擎编译及配置/">ORGE引擎编译及配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/01/hexo常用命令/">Hexo常用命令</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2016 Rancho
+            </div>
+            <div class="footer-right">
+                Powered By <a href="http://hexo.io/" target="_blank" title="Powerful Blog Framework">Hexo</a>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 14;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>

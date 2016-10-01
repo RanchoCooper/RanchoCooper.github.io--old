@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Rancho" />
+
+
+
+<meta name="description" content="进程通信你一定很奇怪, 为什么讲网络首先要说进程?按一般的认识, 网络是用来连接各地的计算机主机的, 但实际上网络是为运行在各个主机里的进程提供服务的
+进程与线程进程 是操作系统理论中最重要的概念之一, 简单而言, 进程是程序运行的一个实例, 是操作系统分配资源的基本单位, 注意, 它还不是基本的执行单位.而一个进程实体由程序代码, 数据和进程控制块3部分构成.
+
+数据: 计算的对象
+程序代码:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络编程基础">
+<meta property="og:url" content="http://rancho1110.com/2016/05/19/网络编程基础/index.html">
+<meta property="og:site_name" content="伯爵在古堡">
+<meta property="og:description" content="进程通信你一定很奇怪, 为什么讲网络首先要说进程?按一般的认识, 网络是用来连接各地的计算机主机的, 但实际上网络是为运行在各个主机里的进程提供服务的
+进程与线程进程 是操作系统理论中最重要的概念之一, 简单而言, 进程是程序运行的一个实例, 是操作系统分配资源的基本单位, 注意, 它还不是基本的执行单位.而一个进程实体由程序代码, 数据和进程控制块3部分构成.
+
+数据: 计算的对象
+程序代码:">
+<meta property="og:updated_time" content="2016-07-04T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络编程基础">
+<meta name="twitter:description" content="进程通信你一定很奇怪, 为什么讲网络首先要说进程?按一般的认识, 网络是用来连接各地的计算机主机的, 但实际上网络是为运行在各个主机里的进程提供服务的
+进程与线程进程 是操作系统理论中最重要的概念之一, 简单而言, 进程是程序运行的一个实例, 是操作系统分配资源的基本单位, 注意, 它还不是基本的执行单位.而一个进程实体由程序代码, 数据和进程控制块3部分构成.
+
+数据: 计算的对象
+程序代码:">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="伯爵在古堡" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/green/pace-theme-center-atom.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>网络编程基础 | 伯爵在古堡</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a368d89b0fb146bd737dc9e2c158260a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Rancho</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">爱和死亡留给上帝。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/about.html">古堡攻略</a></li>
+                        
+                            <li><a href="/archives">/*所有*/</a></li>
+                        
+                            <li><a href="/categories/随笔">/*随笔*/</a></li>
+                        
+                            <li><a href="/categories/札记">/*札记*/</a></li>
+                        
+                            <li><a href="/404.html">无疆之域</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OGRE/">OGRE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack-style/">hack-style</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/宗教/">宗教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建筑/">建筑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/政治/">政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文明/">文明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/法律/">法律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机体系/">计算机体系</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://segmentfault.com/">SegmentFault</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.codingpy.com/">编程派</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Rancho</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Rancho</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">爱和死亡留给上帝。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/about.html">古堡攻略</a></li>
+                
+                    <li><a href="/archives">/*所有*/</a></li>
+                
+                    <li><a href="/categories/随笔">/*随笔*/</a></li>
+                
+                    <li><a href="/categories/札记">/*札记*/</a></li>
+                
+                    <li><a href="/404.html">无疆之域</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" target="_blank" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-网络编程基础" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/19/网络编程基础/" class="article-date">
+      <time datetime="2016-05-19T15:29:56.000Z" itemprop="datePublished">2016-05-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      网络编程基础
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/札记/">札记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h1><p>你一定很奇怪, 为什么讲网络首先要说进程?<br>按一般的认识, 网络是用来连接各地的计算机主机的, 但实际上网络是为运行在各个主机里的进程提供服务的</p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p><code>进程</code> 是操作系统理论中最重要的概念之一, 简单而言, 进程是程序运行的一个实例, 是操作系统分配资源的基本单位, 注意, 它还不是基本的执行单位.<br>而一个进程实体由程序代码, 数据和进程控制块3部分构成.</p>
+<ul>
+<li>数据: 计算的对象</li>
+<li>程序代码: 规定了进程所做的计算</li>
+<li>进程控制块: 操作系统内核用以控制进程而建立的数据结构, 用于管理进程</li>
+</ul>
+<p>多个进程在操作系统的协调下, 在内存里并发地工作着</p>
+<a id="more"></a>
+<p><code>线程</code> 是计算机执行和调度的单位,<br>当创建一个进程时, 系统会自动创建它的第一个线程, 称为主线程, 而它可以继续派生其他进程. 所以, 一个进程至少含有一个线程. 并且, 每个线程都有它自己的CPU寄存器和堆栈, 用以执行进程的地址空间中的代码. 操作系统会为每一个线程提供一个时间片轮转, 这是系统调度的基本机制.</p>
+<h2 id="网络应用"><a href="#网络应用" class="headerlink" title="网络应用"></a>网络应用</h2><p>网络应用程序分为两部分, 一部分是专门负责网络通信的模块, 它与网络协议栈相连, 完成网络上的信息交换, 另一部分则面向用户或者其他的工作. 通信模块是网络分布式应用的基础, 其他模块则对网络中的数据进行加工处理.</p>
+<p>所以网络编程首先要解决网间通信的问题, 然后在此基础上开发应用功能</p>
+<h2 id="网间通信"><a href="#网间通信" class="headerlink" title="网间通信"></a>网间通信</h2><p>对单机系统而言, 操作系统应该保证进程之间相互独立不受干扰, 但又能协调工作, 因此操作系统为进程通信提供了相应的措施. 比如UNIX就提供了管道(pipe), 命名管道, 软终端信号(signal), 共享存储区(shared memory)和信号量(semaphore), 但这些都仅限与本机进程间的通信</p>
+<p>与之类似, 要满足网间通信, 就必须解决一下问题:</p>
+<ul>
+<li>网间进程的标识</li>
+<li>网络协议栈的连接问题</li>
+<li>多重协议的识别</li>
+<li>不同通信服务(可靠性, 及时性)</li>
+</ul>
+<h1 id="Internet网间进程的标识"><a href="#Internet网间进程的标识" class="headerlink" title="Internet网间进程的标识"></a>Internet网间进程的标识</h1><p>就像前面说的, 网络是为不同主机里的进程服务, 那么像两点一线那样, 两端的两个进程就可以确定一条网络连接吗? 答案不是的, Internet是基于TCP/IP协议栈的,<br>网络层的IP可以唯一地确定一台计算机, 而网间进程的标识, 则是通过传输层协议端口(Protocal Port)来区分</p>
+<p>但计算机之间的通信实质上是计算机中的进程进行通信.<br>因此TCP/IP提出了</p>
+<h2 id="端口的概念"><a href="#端口的概念" class="headerlink" title="端口的概念"></a>端口的概念</h2><p>类似文件描述符, 每个端口都有一个整数型标识符: 端口号<br>传输层中TCP和UDP协议的端口号互相独立. 端口号是一个 <code>int16_t</code>, 所以两种协议都能提供65535个端口号供应用层使用. (端口号也是操作系统可分配的一种资源)</p>
+<p>从实现角度讲, 端口对应了一些数据结构和IO缓冲区. 应用程序(即进程)通过系统调用与某端口建立关系后, 该端口就是应用程序与传输层信息交换的桥梁. 进程获取一个端口, 相对于获取了本地唯一的IO文件</p>
+<h2 id="端口号的分配机制"><a href="#端口号的分配机制" class="headerlink" title="端口号的分配机制"></a>端口号的分配机制</h2><p>TCP/IP采用了全局分配(静态)和本地分配(动态)相结合的方式, 即为保留端口号和自由端口号</p>
+<p>具体来说, 端口分配规则如下</p>
+<pre><code>0:              不使用或作为特殊用途
+1-255:          保留给特定的服务
+256-1023:       保留给其他服务, 如路由
+1024-4999:      可以用作任意的客户端口
+5000-65535:     可以用作用户的服务器端口
+</code></pre><p>通常小于1024的端口号需要root权限</p>
+<p>可能你觉得奇怪, 如果一个端口对应一个进程, 那一台服务器怎么处理多个请求啊</p>
+<p>实际上当Web服务器从保留端口收到一个客户端连接请求后, 就立即创建另一个线程, 并为之分配一个服务器端的自由端口号, 新线程处理客户请求, 而原线程则继续监听端口, 这样服务器就能同时服务许多请求了</p>
+<table>
+<thead>
+<tr>
+<th>TCP保留端口号</th>
+<th></th>
+<th>UDP保留端口号</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FTP</td>
+<td>21</td>
+<td>DNS</td>
+<td>53</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>80</td>
+<td>TFTP</td>
+<td>69</td>
+</tr>
+<tr>
+<td>POP3</td>
+<td>110</td>
+<td>SNMP</td>
+<td>161</td>
+</tr>
+</tbody>
+</table>
+<p>所以, 现在你就明白了, 在网络中一个完整的网间通信需要两个进程组成, 而唯一识别这个通信的是一个五元组</p>
+<p><strong>(传输层协议, 本地IP, 本地端口, 服务器IP, 服务器端口)</strong></p>
+<p>这个五元组称为一个全相关(Association), 当两个协议相同的半相关才能完全指定一对网间通信进程</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/05/19/网络编程基础/">网络编程基础</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Rancho</a></p>
+        <p><span>发布时间:</span>2016-05-19, 23:29:56</p>
+        <p><span>最后更新:</span>2016-07-05, 00:00:00</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/19/网络编程基础/" title="网络编程基础">http://rancho1110.com/2016/05/19/网络编程基础/</a>
+            <span class="copy-path" data-clipboard-text="原文:  http://rancho1110.com/2016/05/19/网络编程基础/　　作者:  Rancho" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> 转载注明作者及原始链接
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/05/22/西方私法文明/">
+                    西方私法文明
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/05/19/西方政治文明/">
+                    西方政治文明
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#进程通信"><span class="toc-number">1.</span> <span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程与线程"><span class="toc-number">1.1.</span> <span class="toc-text">进程与线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络应用"><span class="toc-number">1.2.</span> <span class="toc-text">网络应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网间通信"><span class="toc-number">1.3.</span> <span class="toc-text">网间通信</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Internet网间进程的标识"><span class="toc-number">2.</span> <span class="toc-text">Internet网间进程的标识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#端口的概念"><span class="toc-number">2.1.</span> <span class="toc-text">端口的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#端口号的分配机制"><span class="toc-number">2.2.</span> <span class="toc-text">端口号的分配机制</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-6 i,
+        .toc-level-6 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/19/网络编程基础/" data-title="网络编程基础" data-url="http://rancho1110.com/2016/05/19/网络编程基础/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"rancho1110"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/05/22/西方私法文明/" title="上一篇: 西方私法文明">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/05/19/西方政治文明/" title="下一篇: 西方政治文明">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/01/伙伴分配器的极简实现/">伙伴分配器的极简实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/宏孩儿的前世今生/">宏孩儿的前世今生</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/Python进阶之旅/">Python进阶之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/01/凌晨两点/">凌晨两点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/破解开启WPS的WIFI密码/">破解带WPA的WI-FI密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/27/Arch不只是初恋/">Arch: 不只是初恋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/Python杂症之编码/">Python杂症之编码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/优雅玩转Linux/">优雅玩转Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/中西方建筑特征/">中西方建筑特征</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/西方私法文明/">西方私法文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/网络编程基础/">网络编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/西方政治文明/">西方政治文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/运行时环境/">运行时环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/西方文明概说/">西方文明概说</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/04/文明的内涵/">文明的内涵</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/计算机系统漫游/">计算机系统漫游</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/11/编译原理之概论/">编译原理之概论</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/ORGE引擎编译及配置/">ORGE引擎编译及配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/01/hexo常用命令/">Hexo常用命令</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2016 Rancho
+            </div>
+            <div class="footer-right">
+                Powered By <a href="http://hexo.io/" target="_blank" title="Powerful Blog Framework">Hexo</a>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 14;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>

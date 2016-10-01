@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Rancho" />
+
+
+
+<meta name="description" content="为了方便实现代码中的名字, 作用域, 绑定, 数据类型, 运算符, 过程, 参数等抽象概念, 编译器创建并管理一个运行时环境(run-time environment)本章两个主题是存储位置的分配和对变量及数据的访问, 我们将详细讨论存储管理 (栈分配, 堆管理和垃圾回收)
+存储组织一个典型的目标程序在逻辑地址空间的运行时映象包含数据区和代码区. C++在Linux上按如下方式划分存储空间
+
+通常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运行时环境">
+<meta property="og:url" content="http://rancho1110.com/2016/05/13/运行时环境/index.html">
+<meta property="og:site_name" content="伯爵在古堡">
+<meta property="og:description" content="为了方便实现代码中的名字, 作用域, 绑定, 数据类型, 运算符, 过程, 参数等抽象概念, 编译器创建并管理一个运行时环境(run-time environment)本章两个主题是存储位置的分配和对变量及数据的访问, 我们将详细讨论存储管理 (栈分配, 堆管理和垃圾回收)
+存储组织一个典型的目标程序在逻辑地址空间的运行时映象包含数据区和代码区. C++在Linux上按如下方式划分存储空间
+
+通常">
+<meta property="og:image" content="http://rancho1110.com/2016/05/13/运行时环境/典型的内存分配方式.png">
+<meta property="og:image" content="http://rancho1110.com/./典型的活动记录.png">
+<meta property="og:image" content="http://rancho1110.com/./动态分配的数组.png">
+<meta property="og:image" content="http://rancho1110.com/./显示表.png">
+<meta property="og:updated_time" content="2016-07-04T10:21:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运行时环境">
+<meta name="twitter:description" content="为了方便实现代码中的名字, 作用域, 绑定, 数据类型, 运算符, 过程, 参数等抽象概念, 编译器创建并管理一个运行时环境(run-time environment)本章两个主题是存储位置的分配和对变量及数据的访问, 我们将详细讨论存储管理 (栈分配, 堆管理和垃圾回收)
+存储组织一个典型的目标程序在逻辑地址空间的运行时映象包含数据区和代码区. C++在Linux上按如下方式划分存储空间
+
+通常">
+<meta name="twitter:image" content="http://rancho1110.com/2016/05/13/运行时环境/典型的内存分配方式.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="伯爵在古堡" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/green/pace-theme-center-atom.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>运行时环境 | 伯爵在古堡</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a368d89b0fb146bd737dc9e2c158260a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Rancho</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">爱和死亡留给上帝。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/about.html">古堡攻略</a></li>
+                        
+                            <li><a href="/archives">/*所有*/</a></li>
+                        
+                            <li><a href="/categories/随笔">/*随笔*/</a></li>
+                        
+                            <li><a href="/categories/札记">/*札记*/</a></li>
+                        
+                            <li><a href="/404.html">无疆之域</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OGRE/">OGRE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack-style/">hack-style</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/宗教/">宗教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建筑/">建筑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/政治/">政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文明/">文明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/法律/">法律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机体系/">计算机体系</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://segmentfault.com/">SegmentFault</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.codingpy.com/">编程派</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Rancho</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Rancho</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">爱和死亡留给上帝。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/about.html">古堡攻略</a></li>
+                
+                    <li><a href="/archives">/*所有*/</a></li>
+                
+                    <li><a href="/categories/随笔">/*随笔*/</a></li>
+                
+                    <li><a href="/categories/札记">/*札记*/</a></li>
+                
+                    <li><a href="/404.html">无疆之域</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" target="_blank" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-运行时环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/13/运行时环境/" class="article-date">
+      <time datetime="2016-05-12T16:23:56.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      运行时环境
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/札记/">札记</a><a class="article-category-link" href="/categories/札记/编译原理/">编译原理</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>为了方便实现代码中的名字, 作用域, 绑定, 数据类型, 运算符, 过程, 参数等抽象概念, 编译器创建并管理一个运行时环境(run-time environment)<br>本章两个主题是存储位置的分配和对变量及数据的访问, 我们将详细讨论存储管理 (栈分配, 堆管理和垃圾回收)</p>
+<h1 id="存储组织"><a href="#存储组织" class="headerlink" title="存储组织"></a>存储组织</h1><p>一个典型的目标程序在逻辑地址空间的运行时映象包含数据区和代码区. C++在Linux上按如下方式划分存储空间</p>
+<img src="/2016/05/13/运行时环境/典型的内存分配方式.png" alt="典型的内存分配方式" title="典型的内存分配方式">
+<p>通常代码区位于低地址, 而用户栈位于高地址</p>
+<p>数据对象的内存对齐, 比如其地址必须能被4整除. 当你分配了<br><code>char ch[10]</code>, 而它实际占用了12个字节. 这种因对齐而导致的闲置空间称为补白(padding)<br>如果空间紧张, 编译器肯那个会压缩数据以消除补白, 但需要有额外指令用来定位这些数据, 使它们工作起来好像是内存对齐的</p>
+<a id="more"></a>
+<p>生成得到的目标代码的大小在编译时刻就已经确定了, 因此可执行目标代码被放在静态确定的区域: <code>代码区</code> 它通常处于存储的低端<br>另外还有两个用来存放动态数据的区域: 栈和堆. 它们在剩余地址的两端, 并根据需要向对方方向生长. 栈区用来存放称为活动记录的数据结构, 这些活动记录在函数调用过程中生成</p>
+<h2 id="空间的栈式分配"><a href="#空间的栈式分配" class="headerlink" title="空间的栈式分配"></a>空间的栈式分配</h2><p>编程语言使用过程, 函数或方法作为用户自定义动作的单元, 通常的实现是在运行时按照栈进行管理: 当过程被调用时, 存放该过程的局部变量被压入栈, 当这个过程解说时, 该空间被弹出这个栈.</p>
+<h3 id="活动树"><a href="#活动树" class="headerlink" title="活动树"></a>活动树</h3><ul>
+<li>过程调用序列对应活动树的前序遍历</li>
+<li>过程返回的序列对应活动树的后续遍历<br>(详情脑补一下)</li>
+</ul>
+<h3 id="活动记录"><a href="#活动记录" class="headerlink" title="活动记录"></a>活动记录</h3><p>过程调用和返回由控制栈(control stack)的运行时栈进行管理, 每个活跃的活动在控制栈中对应一个活动记录(activation record). 活动树的根位于栈低, 栈中的活动记录序列对应与活动树中到达当前控制所在的活动节点的路径, 该活动节点即为栈顶元素</p>
+<p>过程记录可能的内容和顺序:<br><img src="./典型的活动记录.png" alt="典型的活动记录"></p>
+<h3 id="调用代码序列"><a href="#调用代码序列" class="headerlink" title="调用代码序列"></a>调用代码序列</h3><p>实现过程调用的代码段成为调用代码序列(calling sequence), 它为一个活动记录在栈中分配空间.<br>返回代码序列(return sequence)是类似的代码, 它恢复机器状态, 使得调用过程能够在调用结束后继续执行<br>设计调用代码和活动记录的布局时的设计原则:</p>
+<ul>
+<li>调用者传给被调者的参数放在其活动记录的开始位置</li>
+<li>固定长度的项放置在中间位置, 通常是控制链, 访问链和机器状态字段.</li>
+<li>起初不能确定大小的项放置在活动记录的尾部, 最常见的就是动态数组</li>
+<li>确定栈顶指针所指的位置, 通常让它指向活动记录中固定长度字段的末端</li>
+</ul>
+<h3 id="栈中的变长数据"><a href="#栈中的变长数据" class="headerlink" title="栈中的变长数据"></a>栈中的变长数据</h3><p>大部分程序设计语言, 把编译时刻不能决定大小的对象分配在堆区. 不过也有可以把位置大小的对象, 数组或其他结构分配在栈中, 因为栈分配的开销要小于堆(这么做避免了对其空间进行垃圾回收)</p>
+<p><strong>只有一个数据对象局限于某个过程, 且当此过程结束时它变得不可访问, 才可以使用栈为其分配空间</strong></p>
+<p>例如p有三个局部数组, 虽然存在栈中, 但它们不是p的活动记录的一部分, 目标代码其实是 依靠相对于栈顶指针top-sp的偏移量来访问数组元素<br>可以看到被调过程q的活动记录紧随动态数组之后<br>top标记的是实际的栈顶位置, 指向下一个活动记录开始的位置(用于函数跳转)<br>top_sp用来定位顶层活动记录的局部的定长字段</p>
+<p><img src="./动态分配的数组.png" alt="动态分配的数组"></p>
+<h2 id="栈中非局部数据的访问"><a href="#栈中非局部数据的访问" class="headerlink" title="栈中非局部数据的访问"></a>栈中非局部数据的访问</h2><p>接下来讨论过程如何访问它们的数据, 尤其是在过程p中使用但又不属于p的数据</p>
+<h3 id="没有嵌套过程"><a href="#没有嵌套过程" class="headerlink" title="没有嵌套过程"></a>没有嵌套过程</h3><p>不允许声明嵌套过程的语言其变量的存储分配和访问是简单的</p>
+<ul>
+<li>全局变量在静态区分配</li>
+<li>其他变量都是栈顶活动的局部变量(用过top_sp的偏移量来访问)</li>
+</ul>
+<p>特点: 被声明的过程可以作为参数来传递, 也可以作为参数返回</p>
+<h3 id="允许嵌套过程"><a href="#允许嵌套过程" class="headerlink" title="允许嵌套过程"></a>允许嵌套过程</h3><h4 id="访问链"><a href="#访问链" class="headerlink" title="访问链"></a>访问链</h4><p>针对嵌套函数的一个直接实现方法是在每个活动记录来增加一个被称为访问链(access link)的指针: 如果p嵌套在q中, 那么p的任何活动中的访问链都指向q, 而且q的嵌套深度比p少1层, 而沿着这条链路找到的活动就是其数据和对应活成可以被当前的过程所访问的所有活动</p>
+<h4 id="访问链的处理"><a href="#访问链的处理" class="headerlink" title="访问链的处理"></a>访问链的处理</h4><p>过程型参数的访问链<br>当过程被用作参数时, 调用者要同时传递过程参数的名字和参数对应的访问链</p>
+<h4 id="显示表"><a href="#显示表" class="headerlink" title="显示表"></a>显示表</h4><p>针对嵌套深度过大而采用的高效实现方法: 用一个辅助数组, 每个元素存了相对应深度的指针, 使得array[i]指向嵌套深度为i的活动记录</p>
+<p><img src="./显示表.png" alt="显示表"></p>
+<h2 id="堆管理"><a href="#堆管理" class="headerlink" title="堆管理"></a>堆管理</h2><p>堆是存储空间的一部分, 用于存储生命周期不确定, 或直到显式删除才释放空间的数据. 比如C语言的malloc()就是在堆上分配空间, 以及C++, Java中的new语句(有人说现代高效JVM的new操作开销与栈分配不相上下???)</p>
+<h3 id="存储管理器"><a href="#存储管理器" class="headerlink" title="存储管理器"></a>存储管理器</h3><p>存储管理器是应用程序和操作系统之间的接口, 总是跟踪堆区里的控线空间. 具有两个基本功能:</p>
+<ul>
+<li>分配: 如果可能, 从堆的空闲空间产生所请求大小的连续的堆空间, 如果没有满足大小的堆空间块, 则通过系统调用来获得更多的虚拟空间来扩展堆区大小. 如果物理空间全部用完, 则返回空间耗尽的信息</li>
+<li>回收: 存储器把回收的空间返还到空闲空间的缓冲池, 以复用该空间<br>我们所期望的存储管理器特性:</li>
+<li>空间效率: 尽量使程序所占的堆区达到最小, 并减少存储碎片</li>
+<li>程序效率: 局部性原理(时间和空间), 通过改变数据布局或计算顺序来实现. 参见CSAPP组相关部分</li>
+<li>低开销: 花费在分配和回收的之间在总运行时间中的比例要小(对小型程序而言)</li>
+</ul>
+<h3 id="碎片整理"><a href="#碎片整理" class="headerlink" title="碎片整理"></a>碎片整理</h3><p>堆区在程序执行开始是一个连续的空闲单元, 随着这个程序的分配和回收存储工作的进行, 空间被分隔成若干空闲存储块和已用存储块, 而空闲块不一定位于堆区的某个连续的区域中. 我们将空闲存储块成为窗口(hole), 对于每个分配请求存储管理器将其放入一个足够大的窗口中, 除非窗口大小恰好相等, 否则会因为切分某个窗口而创建出更小的窗口</p>
+<h4 id="碎片整理的两种策略"><a href="#碎片整理的两种策略" class="headerlink" title="碎片整理的两种策略"></a>碎片整理的两种策略</h4><ul>
+<li>best-fit: 将请求的存储分配在满足请求的最小可用窗口中, 这是使程序中碎片最少的策略</li>
+<li>next-fit: 将对象放置到第一个(地址最低)能够容纳请求对象的窗口中, 这种策略花费时间较少(遍历的次数要少得多), 但是它在总体性能上要比best-fit差</li>
+</ul>
+<p>实现best-fit策略时, 我们可以根据空闲块的大小, 将它们分在若干个容器中, 特别是为较小的尺寸设置较多的容器. GNU的C编译器gcc使用存储管理器Lea将所有的存储块对齐到8字节的边界</p>
+<p>虽然best-fit可以提高空间效率, 但从空间局部性角度考虑, 它可能并不是最好的</p>
+<h4 id="管理和接合空闲空间"><a href="#管理和接合空闲空间" class="headerlink" title="管理和接合空闲空间"></a>管理和接合空闲空间</h4><p>一种简单的分配/回收方案是维护一个位映射: 其中的每个比特位对应一个容器, 置位表示占用, 否则则为空闲. 当需要分配一个存储块, 找出相应的块然后置位, 如果没有空闲块, 那就获取一个新的页, 并将其分割成适当大小的存储块</p>
+<h4 id="支持相邻空闲块接合的数据结构"><a href="#支持相邻空闲块接合的数据结构" class="headerlink" title="支持相邻空闲块接合的数据结构"></a>支持相邻空闲块接合的数据结构</h4><ul>
+<li>边界标记: 在每个块的两端都设置一个free/used位, 而与该位相邻位置上存放了该块中的字节数</li>
+<li>双重链接, 嵌入式的空闲列表</li>
+</ul>
+<h3 id="人工回收请求"><a href="#人工回收请求" class="headerlink" title="人工回收请求"></a>人工回收请求</h3><ul>
+<li>内存泄漏(memory-leak): 一直未能删除不能被引用的数据</li>
+<li>悬空指针引用(dangling-pointer-dereference): 引用了已经被删除的数据</li>
+</ul>
+<blockquote>
+<p>流行的编程规范:</p>
+<ul>
+<li>对象所有者: 给每个对象关联上一个所有者</li>
+<li>引用计数: 给每个动态分配的对象附上一个计数<br>垃圾回收器</li>
+</ul>
+</blockquote>
+<h3 id="基于跟踪的回收"><a href="#基于跟踪的回收" class="headerlink" title="基于跟踪的回收"></a>基于跟踪的回收</h3><h4 id="基本的标记-清扫式回收器"><a href="#基本的标记-清扫式回收器" class="headerlink" title="基本的标记-清扫式回收器"></a>基本的标记-清扫式回收器</h4><h4 id="标记并压缩的垃圾回收器"><a href="#标记并压缩的垃圾回收器" class="headerlink" title="标记并压缩的垃圾回收器"></a>标记并压缩的垃圾回收器</h4><h4 id="拷贝回收器"><a href="#拷贝回收器" class="headerlink" title="拷贝回收器"></a>拷贝回收器</h4><h4 id="开销的比较"><a href="#开销的比较" class="headerlink" title="开销的比较"></a>开销的比较</h4>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/05/13/运行时环境/">运行时环境</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Rancho</a></p>
+        <p><span>发布时间:</span>2016-05-13, 00:23:56</p>
+        <p><span>最后更新:</span>2016-07-04, 18:21:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/13/运行时环境/" title="运行时环境">http://rancho1110.com/2016/05/13/运行时环境/</a>
+            <span class="copy-path" data-clipboard-text="原文:  http://rancho1110.com/2016/05/13/运行时环境/　　作者:  Rancho" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> 转载注明作者及原始链接
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/05/19/西方政治文明/">
+                    西方政治文明
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/05/07/西方文明概说/">
+                    西方文明概说
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#存储组织"><span class="toc-number">1.</span> <span class="toc-text">存储组织</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的栈式分配"><span class="toc-number">1.1.</span> <span class="toc-text">空间的栈式分配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#活动树"><span class="toc-number">1.1.1.</span> <span class="toc-text">活动树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#活动记录"><span class="toc-number">1.1.2.</span> <span class="toc-text">活动记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调用代码序列"><span class="toc-number">1.1.3.</span> <span class="toc-text">调用代码序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈中的变长数据"><span class="toc-number">1.1.4.</span> <span class="toc-text">栈中的变长数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈中非局部数据的访问"><span class="toc-number">1.2.</span> <span class="toc-text">栈中非局部数据的访问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#没有嵌套过程"><span class="toc-number">1.2.1.</span> <span class="toc-text">没有嵌套过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#允许嵌套过程"><span class="toc-number">1.2.2.</span> <span class="toc-text">允许嵌套过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#访问链"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">访问链</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#访问链的处理"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">访问链的处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#显示表"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">显示表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#堆管理"><span class="toc-number">1.3.</span> <span class="toc-text">堆管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#存储管理器"><span class="toc-number">1.3.1.</span> <span class="toc-text">存储管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#碎片整理"><span class="toc-number">1.3.2.</span> <span class="toc-text">碎片整理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#碎片整理的两种策略"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">碎片整理的两种策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管理和接合空闲空间"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">管理和接合空闲空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#支持相邻空闲块接合的数据结构"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">支持相邻空闲块接合的数据结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工回收请求"><span class="toc-number">1.3.3.</span> <span class="toc-text">人工回收请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于跟踪的回收"><span class="toc-number">1.3.4.</span> <span class="toc-text">基于跟踪的回收</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本的标记-清扫式回收器"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">基本的标记-清扫式回收器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标记并压缩的垃圾回收器"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">标记并压缩的垃圾回收器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拷贝回收器"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">拷贝回收器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开销的比较"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">开销的比较</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-6 i,
+        .toc-level-6 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/13/运行时环境/" data-title="运行时环境" data-url="http://rancho1110.com/2016/05/13/运行时环境/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"rancho1110"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/05/19/西方政治文明/" title="上一篇: 西方政治文明">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/05/07/西方文明概说/" title="下一篇: 西方文明概说">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/01/伙伴分配器的极简实现/">伙伴分配器的极简实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/宏孩儿的前世今生/">宏孩儿的前世今生</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/Python进阶之旅/">Python进阶之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/01/凌晨两点/">凌晨两点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/破解开启WPS的WIFI密码/">破解带WPA的WI-FI密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/27/Arch不只是初恋/">Arch: 不只是初恋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/Python杂症之编码/">Python杂症之编码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/优雅玩转Linux/">优雅玩转Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/中西方建筑特征/">中西方建筑特征</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/西方私法文明/">西方私法文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/网络编程基础/">网络编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/西方政治文明/">西方政治文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/运行时环境/">运行时环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/西方文明概说/">西方文明概说</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/04/文明的内涵/">文明的内涵</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/计算机系统漫游/">计算机系统漫游</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/11/编译原理之概论/">编译原理之概论</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/ORGE引擎编译及配置/">ORGE引擎编译及配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/01/hexo常用命令/">Hexo常用命令</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2016 Rancho
+            </div>
+            <div class="footer-right">
+                Powered By <a href="http://hexo.io/" target="_blank" title="Powerful Blog Framework">Hexo</a>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 14;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>

