@@ -7,6 +7,13 @@
     </url>
     
     <url>
+        <loc>http://rancho1110.com/about.html</loc>
+        <lastmod>2016-10-02T07:06:41.426Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>http://rancho1110.com/alltree.html</loc>
         <lastmod>2016-10-01T08:18:51.752Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -16,13 +23,6 @@
     <url>
         <loc>http://rancho1110.com/404.html</loc>
         <lastmod>2016-09-30T12:51:09.074Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>http://rancho1110.com/about.html</loc>
-        <lastmod>2016-09-23T04:02:10.020Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
