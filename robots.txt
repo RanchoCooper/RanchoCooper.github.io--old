@@ -1,0 +1,19 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+Allow: /categories/
+Allow: /archives/
+Allow: /tags/
+Allow: /about.html
+Allow: /about
+
+
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /fancybox/
+
+Sitemap: http://rancho1110.com/sitemap.xml
+Sitemap: http://rancho1110.com/baidusitemap.xml
