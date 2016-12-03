@@ -1309,8 +1309,10 @@ body .ui-tooltip {
   -webkit-box-shadow: 8px 8px 8px #8ebbdb;
   box-shadow: 8px 8px 8px #8ebbdb;
   -webkit-border-radius: 12px;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 90%;
+  max-height: 90%;
+  display: block;
+  text-align: center;
   margin: 0.5em auto;
 }
 @-webkit-keyframes cd-bounce-1 {

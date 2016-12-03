@@ -52,18 +52,18 @@ function ua(e) {
         outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> 百度浏览器'
     } else if (r = e.match(/UBrowser([\d]*)\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
-        outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> UCBrowser'
+        outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> UC浏览器'
     } else if (r = e.match(/UCBrowser([\d]*)\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
-        outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> UCBrowser'
+        outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> UC浏览器'
     } else if (r = e.match(/MetaSr/ig)) {
         outputer = '<span class="ua_sogou"><i class="fa fa-globe"></i> 搜狗浏览器'
     } else if (r = e.match(/2345Explorer/ig)) {
         outputer = '<span class="ua_2345explorer"><i class="fa fa-globe"></i> 2345王牌浏览器'
     } else if (r = e.match(/2345chrome/ig)) {
-        outputer = '<span class="ua_2345chrome"><i class="fa fa-globe"></i> 2345加速浏览器'
+        outputer = '<span class="ua_2345chrome"><i class="fa fa-globe"></i> 2345浏览器'
     } else if (r = e.match(/LBBROWSER/ig)) {
-        outputer = '<span class="ua_lbbrowser"><i class="fa fa-globe"></i> 猎豹安全浏览器'
+        outputer = '<span class="ua_lbbrowser"><i class="fa fa-globe"></i> 猎豹浏览器'
     } else if (r = e.match(/MicroMessenger\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
         outputer = '<span class="ua_qq"><i class="fa fa-weixin"></i> 微信'
@@ -78,7 +78,7 @@ function ua(e) {
         /*.split('/')[0]*/
     } else if (r = e.match(/MiuiBrowser\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
-        outputer = '<span class="ua_mi"><i class="fa fa-globe"></i> Miui浏览器'
+        outputer = '<span class="ua_mi"><i class="fa fa-globe"></i> 小米浏览器'
         /*.split('/')[0]*/
     } else if (r = e.match(/Chrome([\d]*)\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
@@ -93,7 +93,7 @@ function ua(e) {
     } else if (r = e.match(/Trident\/7.0/gi)) {
         outputer = '<span class="ua_ie"><i class="fa fa-internet-explorer"></i> IE 11'
     } else if (r = e.match(/MSIE\s([^\s|;]+)/gi)) {
-        outputer = '<span class="ua_ie"><i class="fa fa-internet-explorer"></i> IE' + ' ' + r[0]
+        outputer = '<span class="ua_ie"><i class="fa fa-internet-explorer"></i> 史诗级IE' + ' ' + r[0]
         /*.replace('MSIE', '').split('.')[0]*/
     } else {
         outputer = '<span class="ua_other"><i class="fa fa-globe"></i> 其它浏览器'
