@@ -3,6 +3,116 @@
 
 
     
+  <url>
+    <loc>http://rancho1110.com/2016/12/03/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/</loc>
+    <lastmod>2016-12-03T09:41:26.000Z</lastmod>
+    <data>
+        <display>
+        <title>个人笔记整理</title>
+        <pubTime>2016-12-03T09:41:26.000Z</pubTime>
+        
+        <tag>笔记整理</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://rancho1110.com/2016/09/01/%E5%87%8C%E6%99%A8%E4%B8%A4%E7%82%B9/</loc>
+    <lastmod>2016-10-06T08:16:06.531Z</lastmod>
+    <data>
+        <display>
+        <title>凌晨两点</title>
+        <pubTime>2016-08-31T19:21:06.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://rancho1110.com/2016/05/22/%E8%A5%BF%E6%96%B9%E7%A7%81%E6%B3%95%E6%96%87%E6%98%8E/</loc>
+    <lastmod>2016-10-05T06:02:27.905Z</lastmod>
+    <data>
+        <display>
+        <title>西方私法文明</title>
+        <pubTime>2016-05-22T02:58:56.000Z</pubTime>
+        
+        <tag>法律</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+             
+              <breadCrumb title="西方文明通论" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/"/>
+          
+             
+              <breadCrumb title="0x04" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/0x04/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://rancho1110.com/2016/04/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</loc>
+    <lastmod>2016-10-05T06:00:41.939Z</lastmod>
+    <data>
+        <display>
+        <title>计算机系统漫游</title>
+        <pubTime>2016-04-30T05:11:22.000Z</pubTime>
+        
+        <tag>计算机体系</tag>
+         
+         
+           
+             
+              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="CSAPP" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/CSAPP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://rancho1110.com/2016/07/29/%E7%A0%B4%E8%A7%A3%E5%BC%80%E5%90%AFWPS%E7%9A%84WIFI%E5%AF%86%E7%A0%81/</loc>
+    <lastmod>2016-10-05T05:58:45.152Z</lastmod>
+    <data>
+        <display>
+        <title>破解带WPA的WI-FI密码</title>
+        <pubTime>2016-07-29T05:44:06.000Z</pubTime>
+        
+        <tag>hack-style</tag>
+         
+         
+           
+             
+              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="网络安全" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+          
+        </display>
+    </data>
+    </url>
+
     
     
   <url>
@@ -19,73 +129,6 @@
            
              
               <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/09/01/%E5%87%8C%E6%99%A8%E4%B8%A4%E7%82%B9/</loc>
-    <lastmod>2016-10-01T04:54:18.209Z</lastmod>
-    <data>
-        <display>
-        <title>凌晨两点</title>
-        <pubTime>2016-09-01T07:21:06.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/09/20/Python%E8%BF%9B%E9%98%B6%E4%B9%8B%E6%97%85/</loc>
-    <lastmod>2016-10-01T04:52:45.346Z</lastmod>
-    <data>
-        <display>
-        <title>Python进阶之旅</title>
-        <pubTime>2016-09-20T12:23:52.000Z</pubTime>
-        
-        <tag>Python</tag>
-         
-         
-           
-             
-              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
-          
-             
-              <breadCrumb title="进阶之旅" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/%E8%BF%9B%E9%98%B6%E4%B9%8B%E6%97%85/"/>
-          
-             
-              <breadCrumb title="0x00" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/%E8%BF%9B%E9%98%B6%E4%B9%8B%E6%97%85/0x00/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/07/29/%E7%A0%B4%E8%A7%A3%E5%BC%80%E5%90%AFWPS%E7%9A%84WIFI%E5%AF%86%E7%A0%81/</loc>
-    <lastmod>2016-10-01T04:52:33.823Z</lastmod>
-    <data>
-        <display>
-        <title>破解带WPA的WI-FI密码</title>
-        <pubTime>2016-07-29T05:44:06.000Z</pubTime>
-        
-        <tag>hack-style</tag>
-         
-         
-           
-             
-              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
-          
-             
-              <breadCrumb title="网络安全" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
           
         </display>
     </data>
@@ -123,7 +166,7 @@
     <lastmod>2016-09-28T07:59:01.000Z</lastmod>
     <data>
         <display>
-        <title>宏孩儿的前世今生</title>
+        <title>内核宏的前世今生</title>
         <pubTime>2016-09-28T07:59:01.000Z</pubTime>
         
         <tag>hack-style</tag>
@@ -145,40 +188,14 @@
 
     
   <url>
-    <loc>http://rancho1110.com/2016/05/22/%E8%A5%BF%E6%96%B9%E7%A7%81%E6%B3%95%E6%96%87%E6%98%8E/</loc>
-    <lastmod>2016-09-22T20:56:43.332Z</lastmod>
+    <loc>http://rancho1110.com/2016/09/20/Python%E8%BF%9B%E9%98%B6%E4%B9%8B%E6%97%85/</loc>
+    <lastmod>2016-09-22T12:23:52.000Z</lastmod>
     <data>
         <display>
-        <title>西方私法文明</title>
-        <pubTime>2016-05-22T02:58:56.000Z</pubTime>
+        <title>Python进阶之旅</title>
+        <pubTime>2016-09-20T12:23:52.000Z</pubTime>
         
-        <tag>法律</tag>
-         
-         
-           
-             
-              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
-          
-             
-              <breadCrumb title="西方文明通论" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/"/>
-          
-             
-              <breadCrumb title="0x04" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/0x04/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/04/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</loc>
-    <lastmod>2016-09-22T19:51:36.302Z</lastmod>
-    <data>
-        <display>
-        <title>计算机系统漫游</title>
-        <pubTime>2016-04-30T05:11:22.000Z</pubTime>
-        
-        <tag>计算机体系</tag>
+        <tag>Python</tag>
          
          
            
@@ -186,7 +203,10 @@
               <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
           
              
-              <breadCrumb title="CSAPP" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/CSAPP/"/>
+              <breadCrumb title="进阶之旅" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/%E8%BF%9B%E9%98%B6%E4%B9%8B%E6%97%85/"/>
+          
+             
+              <breadCrumb title="0x00" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/%E8%BF%9B%E9%98%B6%E4%B9%8B%E6%97%85/0x00/"/>
           
         </display>
     </data>
@@ -227,119 +247,13 @@
     
   <url>
     <loc>http://rancho1110.com/2016/07/27/Arch%E4%B8%8D%E5%8F%AA%E6%98%AF%E5%88%9D%E6%81%8B/</loc>
-    <lastmod>2016-07-26T16:00:00.000Z</lastmod>
+    <lastmod>2016-07-27T04:49:55.000Z</lastmod>
     <data>
         <display>
         <title>Arch: 不只是初恋</title>
         <pubTime>2016-07-27T04:49:55.000Z</pubTime>
         
         <tag>Linux</tag>
-         
-         
-           
-             
-              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/04/01/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
-    <lastmod>2016-07-04T16:48:16.000Z</lastmod>
-    <data>
-        <display>
-        <title>Hexo常用命令</title>
-        <pubTime>2016-03-31T16:37:12.000Z</pubTime>
-        
-        <tag>Hexo</tag>
-         
-         
-           
-             
-              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/05/19/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2016-07-04T16:00:00.000Z</lastmod>
-    <data>
-        <display>
-        <title>网络编程基础</title>
-        <pubTime>2016-05-19T15:29:56.000Z</pubTime>
-        
-        <tag>网络</tag>
-         
-         
-           
-             
-              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/05/22/%E4%B8%AD%E8%A5%BF%E6%96%B9%E5%BB%BA%E7%AD%91%E7%89%B9%E5%BE%81/</loc>
-    <lastmod>2016-07-04T16:00:00.000Z</lastmod>
-    <data>
-        <display>
-        <title>中西方建筑特征</title>
-        <pubTime>2016-05-22T13:01:14.000Z</pubTime>
-        
-        <tag>建筑</tag>
-         
-         
-           
-             
-              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
-          
-             
-              <breadCrumb title="西方文明通论" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/"/>
-          
-             
-              <breadCrumb title="0x05" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/0x05/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/06/01/%E4%BC%98%E9%9B%85%E7%8E%A9%E8%BD%ACLinux/</loc>
-    <lastmod>2016-07-04T16:00:00.000Z</lastmod>
-    <data>
-        <display>
-        <title>优雅玩转Linux</title>
-        <pubTime>2016-05-31T17:53:00.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-         
-           
-             
-              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://rancho1110.com/2016/04/07/ORGE%E5%BC%95%E6%93%8E%E7%BC%96%E8%AF%91%E5%8F%8A%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2016-07-04T10:22:00.000Z</lastmod>
-    <data>
-        <display>
-        <title>ORGE引擎编译及配置</title>
-        <pubTime>2016-04-07T05:53:49.000Z</pubTime>
-        
-        <tag>OGRE</tag>
          
          
            
@@ -374,7 +288,7 @@
     
   <url>
     <loc>http://rancho1110.com/2016/05/07/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E6%A6%82%E8%AF%B4/</loc>
-    <lastmod>2016-07-03T16:00:00.000Z</lastmod>
+    <lastmod>2016-07-04T08:50:46.000Z</lastmod>
     <data>
         <display>
         <title>西方文明概说</title>
@@ -400,7 +314,7 @@
     
   <url>
     <loc>http://rancho1110.com/2016/05/19/%E8%A5%BF%E6%96%B9%E6%94%BF%E6%B2%BB%E6%96%87%E6%98%8E/</loc>
-    <lastmod>2016-07-03T16:00:00.000Z</lastmod>
+    <lastmod>2016-07-04T03:21:36.000Z</lastmod>
     <data>
         <display>
         <title>西方政治文明</title>
@@ -425,8 +339,100 @@
 
     
   <url>
+    <loc>http://rancho1110.com/2016/06/01/%E4%BC%98%E9%9B%85%E7%8E%A9%E8%BD%ACLinux/</loc>
+    <lastmod>2016-05-31T17:53:00.000Z</lastmod>
+    <data>
+        <display>
+        <title>优雅玩转Linux</title>
+        <pubTime>2016-05-31T17:53:00.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://rancho1110.com/2016/05/22/%E4%B8%AD%E8%A5%BF%E6%96%B9%E5%BB%BA%E7%AD%91%E7%89%B9%E5%BE%81/</loc>
+    <lastmod>2016-05-22T13:01:14.000Z</lastmod>
+    <data>
+        <display>
+        <title>中西方建筑特征</title>
+        <pubTime>2016-05-22T13:01:14.000Z</pubTime>
+        
+        <tag>建筑</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+             
+              <breadCrumb title="西方文明通论" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/"/>
+          
+             
+              <breadCrumb title="0x05" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/0x05/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://rancho1110.com/2016/05/19/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2016-05-19T15:29:56.000Z</lastmod>
+    <data>
+        <display>
+        <title>网络编程基础</title>
+        <pubTime>2016-05-19T15:29:56.000Z</pubTime>
+        
+        <tag>网络</tag>
+         
+         
+           
+             
+              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://rancho1110.com/2016/05/04/%E6%96%87%E6%98%8E%E7%9A%84%E5%86%85%E6%B6%B5/</loc>
+    <lastmod>2016-05-04T13:56:56.000Z</lastmod>
+    <data>
+        <display>
+        <title>文明的内涵</title>
+        <pubTime>2016-05-04T13:56:56.000Z</pubTime>
+        
+        <tag>宗教</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+             
+              <breadCrumb title="西方文明通论" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/"/>
+          
+             
+              <breadCrumb title="0x01" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/0x01/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://rancho1110.com/2016/04/11/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E4%B9%8B%E6%A6%82%E8%AE%BA/</loc>
-    <lastmod>2016-07-03T16:00:00.000Z</lastmod>
+    <lastmod>2016-04-10T17:12:17.000Z</lastmod>
     <data>
         <display>
         <title>编译原理之概论</title>
@@ -446,25 +452,39 @@
 
     
   <url>
-    <loc>http://rancho1110.com/2016/05/04/%E6%96%87%E6%98%8E%E7%9A%84%E5%86%85%E6%B6%B5/</loc>
-    <lastmod>2016-07-03T16:00:00.000Z</lastmod>
+    <loc>http://rancho1110.com/2016/04/07/ORGE%E5%BC%95%E6%93%8E%E7%BC%96%E8%AF%91%E5%8F%8A%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2016-04-07T10:22:00.000Z</lastmod>
     <data>
         <display>
-        <title>文明的内涵</title>
-        <pubTime>2016-05-04T13:56:56.000Z</pubTime>
+        <title>ORGE引擎编译及配置</title>
+        <pubTime>2016-04-07T05:53:49.000Z</pubTime>
         
-        <tag>宗教</tag>
+        <tag>OGRE</tag>
          
          
            
              
-              <breadCrumb title="随笔" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/"/>
+              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://rancho1110.com/2016/04/01/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2016-03-31T16:37:12.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo常用命令</title>
+        <pubTime>2016-03-31T16:37:12.000Z</pubTime>
+        
+        <tag>Hexo</tag>
+         
+         
+           
              
-              <breadCrumb title="西方文明通论" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/"/>
-          
-             
-              <breadCrumb title="0x01" url="http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E9%80%9A%E8%AE%BA/0x01/"/>
+              <breadCrumb title="札记" url="http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/"/>
           
         </display>
     </data>

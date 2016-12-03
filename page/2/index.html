@@ -196,7 +196,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OGRE/">OGRE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack-style/">hack-style</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/宗教/">宗教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建筑/">建筑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/政治/">政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文明/">文明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/法律/">法律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机体系/">计算机体系</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OGRE/">OGRE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hack-style/">hack-style</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/宗教/">宗教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建筑/">建筑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/政治/">政治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文明/">文明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/法律/">法律</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记整理/">笔记整理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机体系/">计算机体系</a></li></ul>
                     </div>
                 </section>
                 
@@ -274,6 +274,87 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Python杂症之编码" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/26/Python杂症之编码/" class="article-date">
+      <time datetime="2016-07-26T10:47:18.000Z" itemprop="datePublished">2016-07-26</time>
+</a>
+
+ 
+    <a href="/2016/07/26/Python杂症之编码/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2016/07/26/Python杂症之编码/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/26/Python杂症之编码/">Python杂症之编码</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>最近手头有一个项目, 爬取领英上所有注册用户的资料<br>虽然领英反爬很机智, 但好在对目录的访问并没有限制<br>不过发现一个蛋疼的问题, 用户主页refer在入库的时候, 编码的统一成了个问题</p>
+<p>在此整理一下Python编码的相关内容<br>如果是Python3.x, 应该更为简单</p>
+<p>如果你只是一味地 encode &amp; decode 来调试(盲人Code)<br>那倒不如花点时间想想为何出现乱码</p>
+<h2 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h2><p>编码问题经常出现在文件读取, 网络请求以及处理中文的时候</p>
+<h3 id="错误1"><a href="#错误1" class="headerlink" title="错误1"></a>错误1</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UnicodeDecodeError: 'ascii' codec can't decode byte 0xe6</div><div class="line">in position 0: ordinal not in range(128)</div></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/札记/">札记</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编码/">编码</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/07/26/Python杂症之编码/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-优雅玩转Linux" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -836,89 +917,6 @@
 
 
   
-    <article id="post-文明的内涵" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/04/文明的内涵/" class="article-date">
-      <time datetime="2016-05-04T13:56:56.000Z" itemprop="datePublished">2016-05-04</time>
-</a>
-
- 
-    <a href="/2016/05/04/文明的内涵/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/05/04/文明的内涵/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/04/文明的内涵/">文明的内涵</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="文明概念的形成与发展"><a href="#文明概念的形成与发展" class="headerlink" title="文明概念的形成与发展"></a>文明概念的形成与发展</h2><p><code>文明</code> 一词起源于拉丁文, 最初值在某特定地方居住下来的人, 引申为市民(公民), 其现代含义由18世纪欧洲人定义, 一方面用于区别之前中世纪野蛮愚昧的文明, 另一方面用于区别当时欧洲内外的文明</p>
-<ul>
-<li>19世纪的史学家将人类社会划分为三个阶段: 蒙昧时期, 野蛮时期, 文明时期</li>
-<li>文明是一种价值尺度, 它意味着人类进化发展过程中所达到的状态和发展趋势</li>
-<li>文明作为价值尺度的三个内在要素: <code>人性的进步</code>, <code>人能力的提高</code>, <code>社会的发展</code>.</li>
-</ul>
-<h2 id="文明的要素"><a href="#文明的要素" class="headerlink" title="文明的要素"></a>文明的要素</h2><h3 id="人性的进步"><a href="#人性的进步" class="headerlink" title="人性的进步"></a>人性的进步</h3><p>人性的进步指的是人道主义水平的提高, 即人类兽性的消除, 对生命的珍惜和对人格的尊重. 古时部落的族人将一切外族人视作野兽, 毫无人性, 抓来就吃. 加勒比海这个词, 其实就是西方语言里对食人族一词的误写, 哥伦布发现拉丁美洲时就是把这原始部落称为食人族.</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/随笔/">随笔</a><a class="article-category-link" href="/categories/随笔/西方文明通论/">西方文明通论</a><a class="article-category-link" href="/categories/随笔/西方文明通论/0x01/">0x01</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/宗教/">宗教</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/05/04/文明的内涵/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -936,6 +934,24 @@
                 Powered By <a href="http://hexo.io/" target="_blank" title="Powerful Blog Framework">Hexo</a>
             </div>
         </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="站点访问量"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
         
     </div>
 </footer>
