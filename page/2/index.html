@@ -316,8 +316,6 @@
               <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>最近手头有一个项目, 爬取领英上所有注册用户的资料<br>虽然领英反爬很机智, 但好在对目录的访问并没有限制<br>不过发现一个蛋疼的问题, 用户主页refer在入库的时候, 编码的统一成了个问题</p>
 <p>在此整理一下Python编码的相关内容<br>如果是Python3.x, 应该更为简单</p>
 <p>如果你只是一味地 encode &amp; decode 来调试(盲人Code)<br>那倒不如花点时间想想为何出现乱码</p>
-<h2 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h2><p>编码问题经常出现在文件读取, 网络请求以及处理中文的时候</p>
-<h3 id="错误1"><a href="#错误1" class="headerlink" title="错误1"></a>错误1</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UnicodeDecodeError: 'ascii' codec can't decode byte 0xe6</div><div class="line">in position 0: ordinal not in range(128)</div></pre></td></tr></table></figure>
           
       
     </div>
@@ -397,7 +395,6 @@
               <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>个人的Linux捣腾经历要从大一开始， 但在大一后暑假通读了《Linux私房菜》之后才渐渐步入正规</p>
 <p>本文只是总结性地罗列了一些常用工具配置, 如果你才上手Linux或者遇到什么问题, 欢迎留言</p>
 <p>各发型版相比较而言， ArchLinux就像初恋一样， 充满了很多可能和新奇， 每一天都会是新鲜的。 而主打桌面的Ubuntu则更像贤妻良母(简单易上手).</p>
-<p>下面就从<code>界面美化</code>, <code>硬件性能</code>, <code>开发环境</code> 三方面</p>
           
       
     </div>
@@ -476,8 +473,6 @@
           
               <p>建筑是人类最为古老的艺术形式, 因而在西方有着”第一艺术的美誉”</p>
 <h1 id="古代建筑"><a href="#古代建筑" class="headerlink" title="古代建筑"></a>古代建筑</h1><h2 id="建筑材料"><a href="#建筑材料" class="headerlink" title="建筑材料"></a>建筑材料</h2><p>古代的建筑材料都是直接来自自然</p>
-<img src="/2016/05/22/中西方建筑特征/古代建筑的材料.png" alt="古代建筑的材料" title="古代建筑的材料">
-<p>石头密度高, 寿命长, 但施工周期长.<br>所以西方的经典建筑往往施工周期长达十几上百年, 而落成之后可以经受千百年的风吹日晒. 比如帕特农神庙, 已建成两千四百多年.</p>
           
       
     </div>
@@ -635,12 +630,6 @@
           
               <h1 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h1><p>你一定很奇怪, 为什么讲网络首先要说进程?<br>按一般的认识, 网络是用来连接各地的计算机主机的, 但实际上网络是为运行在各个主机里的进程提供服务的</p>
 <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p><code>进程</code> 是操作系统理论中最重要的概念之一, 简单而言, 进程是程序运行的一个实例, 是操作系统分配资源的基本单位, 注意, 它还不是基本的执行单位.<br>而一个进程实体由程序代码, 数据和进程控制块3部分构成.</p>
-<ul>
-<li>数据: 计算的对象</li>
-<li>程序代码: 规定了进程所做的计算</li>
-<li>进程控制块: 操作系统内核用以控制进程而建立的数据结构, 用于管理进程</li>
-</ul>
-<p>多个进程在操作系统的协调下, 在内存里并发地工作着</p>
           
       
     </div>

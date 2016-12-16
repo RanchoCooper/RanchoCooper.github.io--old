@@ -16,29 +16,23 @@
 
 
 <meta name="description" content="前言知识就是力量, 但是拥有力量不代表着可以为所欲为.在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考
-你知道的越多, 就越能保护好自己.
-准备工作像 Kali Linux 和 BackTrack 等发行版, 预装好了各种安全工具和软件包下文实际环境为 Arch, 对象是某公司的弱口令路由器…
-sudo pacman -S wireles">
+你知道的越多, 就越能保护好自己.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="破解带WPA的WI-FI密码">
 <meta property="og:url" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/index.html">
 <meta property="og:site_name" content="伯爵在古堡">
 <meta property="og:description" content="前言知识就是力量, 但是拥有力量不代表着可以为所欲为.在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考
-你知道的越多, 就越能保护好自己.
-准备工作像 Kali Linux 和 BackTrack 等发行版, 预装好了各种安全工具和软件包下文实际环境为 Arch, 对象是某公司的弱口令路由器…
-sudo pacman -S wireles">
+你知道的越多, 就越能保护好自己.">
 <meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/iwconfig.png">
 <meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/airmon-ng.png">
 <meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/airodump-ng.png">
 <meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/reaver.png">
 <meta property="og:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/result.png">
-<meta property="og:updated_time" content="2016-10-05T05:58:45.152Z">
+<meta property="og:updated_time" content="2016-12-16T11:47:15.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="破解带WPA的WI-FI密码">
 <meta name="twitter:description" content="前言知识就是力量, 但是拥有力量不代表着可以为所欲为.在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考
-你知道的越多, 就越能保护好自己.
-准备工作像 Kali Linux 和 BackTrack 等发行版, 预装好了各种安全工具和软件包下文实际环境为 Arch, 对象是某公司的弱口令路由器…
-sudo pacman -S wireles">
+你知道的越多, 就越能保护好自己.">
 <meta name="twitter:image" content="http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/iwconfig.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -330,12 +324,12 @@ sudo pacman -S wireles">
           
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>知识就是力量, 但是拥有力量不代表着可以为所欲为.<br>在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.<br>并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考</p>
 <p>你知道的越多, 就越能保护好自己.</p>
+<a id="more"></a>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>像 <code>Kali Linux</code> 和 <code>BackTrack</code> 等发行版, 预装好了各种安全工具和软件包<br>下文实际环境为 <code>Arch</code>, 对象是某公司的弱口令路由器…</p>
 <pre><code>sudo pacman -S wireless_tools
 sudo pacman -S aircrack-ng
 sudo pacman -S reaver
 </code></pre><p>好了, 工具具备, 只欠东风.<br>接下来就正式体验一番黑客入侵的感觉</p>
-<a id="more"></a>
 <h2 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h2><h3 id="搜集设备信息"><a href="#搜集设备信息" class="headerlink" title="搜集设备信息"></a>搜集设备信息</h3><pre><code>iwconfig
 </code></pre><p>图中 wlp3s0 是我的无线网卡名称, 不过一般机子都叫 <code>wlan0</code>, 而 <code>enp</code> 那个则是以太网网卡<br>随后则是一些网卡信息说明</p>
 <img src="/2016/07/29/破解开启WPS的WIFI密码/iwconfig.png" alt="iwconfig" title="iwconfig">
@@ -370,7 +364,7 @@ sudo pacman -S reaver
         <p><span>本文标题:</span><a href="/2016/07/29/破解开启WPS的WIFI密码/">破解带WPA的WI-FI密码</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Rancho</a></p>
         <p><span>发布时间:</span>2016-07-29, 13:44:06</p>
-        <p><span>最后更新:</span>2016-10-05, 13:58:45</p>
+        <p><span>最后更新:</span>2016-12-16, 19:47:15</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/07/29/破解开启WPS的WIFI密码/" title="破解带WPA的WI-FI密码">http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/</a>
             <span class="copy-path" data-clipboard-text="原文:  http://rancho1110.com/2016/07/29/破解开启WPS的WIFI密码/　　作者:  Rancho" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

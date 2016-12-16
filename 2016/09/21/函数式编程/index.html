@@ -18,8 +18,7 @@
 <meta name="description" content="参数机制的讨论
 为函数式编程带来便利的几个内置函数
 
-关于参数常规情况首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)
-1234567def func(name, age=20):    print(&quot;%s is %d age.&quot; % (name, age))        # 好像都推荐str.format()的格式化func(&apos;rancho&apos;)# output: r">
+关于参数常规情况首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="函数式编程">
 <meta property="og:url" content="http://rancho1110.com/2016/09/21/函数式编程/index.html">
@@ -27,16 +26,14 @@
 <meta property="og:description" content="参数机制的讨论
 为函数式编程带来便利的几个内置函数
 
-关于参数常规情况首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)
-1234567def func(name, age=20):    print(&quot;%s is %d age.&quot; % (name, age))        # 好像都推荐str.format()的格式化func(&apos;rancho&apos;)# output: r">
+关于参数常规情况首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)">
 <meta property="og:updated_time" content="2016-09-21T18:44:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="函数式编程">
 <meta name="twitter:description" content="参数机制的讨论
 为函数式编程带来便利的几个内置函数
 
-关于参数常规情况首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)
-1234567def func(name, age=20):    print(&quot;%s is %d age.&quot; % (name, age))        # 好像都推荐str.format()的格式化func(&apos;rancho&apos;)# output: r">
+关于参数常规情况首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -329,9 +326,8 @@
 <li>参数机制的讨论</li>
 <li>为函数式编程带来便利的几个内置函数</li>
 </ul>
-<h2 id="关于参数"><a href="#关于参数" class="headerlink" title="关于参数"></a>关于参数</h2><h3 id="常规情况"><a href="#常规情况" class="headerlink" title="常规情况"></a>常规情况</h3><p>首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)</p>
+<h2 id="关于参数"><a href="#关于参数" class="headerlink" title="关于参数"></a>关于参数</h2><h3 id="常规情况"><a href="#常规情况" class="headerlink" title="常规情况"></a>常规情况</h3><p>首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)<br><a id="more"></a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(name, age=<span class="number">20</span>)</span>:</span></div><div class="line">    print(<span class="string">"%s is %d age."</span> % (name, age))        <span class="comment"># 好像都推荐str.format()的格式化</span></div><div class="line"></div><div class="line">func(<span class="string">'rancho'</span>)</div><div class="line"><span class="comment"># output: rancho is 20 age.</span></div><div class="line">func(<span class="string">'rancho'</span>, <span class="number">24</span>)</div><div class="line"><span class="comment"># output: rancho is 24 age.</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
 <h3 id="期望更多"><a href="#期望更多" class="headerlink" title="期望更多"></a>期望更多</h3><p>但这还不能完全满足我们的需要, 为了更灵活地调用函数, 我们希望写出来的代码可以应对事先不知道实参个数的情况, 就是当你调用它的时候, 参数个数可多可少<br>这时候对于任意数量的位置参数(a, b这样的)和任意数量的关键字参数(a=1, b=2这样的), 分别用一个元组和一个字典来接收, 并分别称为可变长参数列表和可变长参数字典<br>参数列表的完整形式如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(args, kwargs, *args, **kwargs)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
 <p>再拿前面的例子, 现在就可以应对任意个实参的情况了</p>

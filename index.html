@@ -315,19 +315,6 @@
           
               <h3 id="我和印象笔记"><a href="#我和印象笔记" class="headerlink" title="我和印象笔记"></a>我和印象笔记</h3><p>从刚进大学开始, 就开始用印象笔记来整理各类文档资料和个人原创文字. 完美主义有时候会是致命的, 比如你非想要把混乱不堪变成井井有条. 要想和熵增原理作对抗, 花费的精力是不会少的. 但在可见的未来, 这部分付出应该是值得的, 在这里整理一下个人笔记整理的方法和思路</p>
 <p>先来看看我在大学几年都往印象笔记里扔了什么(what a mass)</p>
-<ul>
-<li>个人随笔(闪过脑海的想法和心得, 乱到飞起)</li>
-<li>个人日记(平均一年大概就写了一个月的)</li>
-<li>个人简记(哪天读完哪本书, 哪天看了哪部电影)</li>
-<li>影视短评</li>
-<li>书籍笔记</li>
-<li>公开课笔记</li>
-<li>来自各地的技术文章</li>
-<li>来自知乎的乱七八糟</li>
-<li>对某些产品的建议和看法</li>
-<li>以往的各种信件的电子备份。。。</li>
-</ul>
-<p>别看这样罗列出来看起来还算工整, 但你要是页整理过就知道多费劲了. 我有一个笔记本就叫缓冲区, 临时放那些未分类笔记, 实际上常年会驻留几十条笔记, 要是不定期整理会爆炸</p>
           
       
     </div>
@@ -405,9 +392,7 @@
       
           
               <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本来准备看下<linux/sched.h>的源码, 结果从进程描述符看到slab分配器再到这一篇关于<code>buddy_memory_allocation</code> 的实现</p>
-<p>作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)</p>
-<h2 id="算法过程"><a href="#算法过程" class="headerlink" title="算法过程"></a>算法过程</h2><p>其内存分配和释放的过程一张图就能说明白<br>对于要分配的内存大小N, 首先要找大于它的2的最小幂N2 (比如10字节就变成16字节)<br>然后寻找大小合适的内存块, 找到则返回.<br>没找到则做一次”切割”, 继续寻找-切割寻找..</p>
-<p>而当内存释放的时候, 如果相邻块未使用则将其合并(如果可能就还原回切割前的状态)</p>
+<p>作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)<br>
           
       
     </div>
@@ -487,9 +472,6 @@
               <p><em>持续更新</em></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Linux内核确实是开源一大宝库, 阅读源码学到了很多东西, 学习版本库见<a href="https://github.com/RanchoCooper/AmazingKernel">这里</a>. 接下来会持续更新几篇内核相关的文章</p>
 <p>而本文的主题就是Kernel中的各种宏, 其实十有八九都是和指针强转相关. 琢磨指针早已是大一的事了, 好在现在看这些代码倒也基本无压力</p>
-<h3 id="container-of-offsetof"><a href="#container-of-offsetof" class="headerlink" title="container_of/offsetof"></a>container_of/offsetof</h3><p>定义内核链表的时候, 链表本身是仅含有指针域而没有数据域的, 简捷实用而且很通用!</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> list_node &#123;</div><div class="line">    <span class="keyword">struct</span> list_node *next, *prev;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>这样一来, 就意味着你在使用该链表时需要再定义一个包含链表和数据字段的结构体. 而在通过链表来遍历其中的数据时, 就得解决<strong>通过结构体成员来得到结构体本身的地址</strong></p>
           
       
     </div>
@@ -570,8 +552,7 @@
 <li>参数机制的讨论</li>
 <li>为函数式编程带来便利的几个内置函数</li>
 </ul>
-<h2 id="关于参数"><a href="#关于参数" class="headerlink" title="关于参数"></a>关于参数</h2><h3 id="常规情况"><a href="#常规情况" class="headerlink" title="常规情况"></a>常规情况</h3><p>首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(name, age=<span class="number">20</span>)</span>:</span></div><div class="line">    print(<span class="string">"%s is %d age."</span> % (name, age))        <span class="comment"># 好像都推荐str.format()的格式化</span></div><div class="line"></div><div class="line">func(<span class="string">'rancho'</span>)</div><div class="line"><span class="comment"># output: rancho is 20 age.</span></div><div class="line">func(<span class="string">'rancho'</span>, <span class="number">24</span>)</div><div class="line"><span class="comment"># output: rancho is 24 age.</span></div></pre></td></tr></table></figure>
+<h2 id="关于参数"><a href="#关于参数" class="headerlink" title="关于参数"></a>关于参数</h2><h3 id="常规情况"><a href="#常规情况" class="headerlink" title="常规情况"></a>常规情况</h3><p>首先要说的就是参数机制, 最为普通的函数调用无非是这样的(带一些常规参数)<br>
           
       
     </div>
@@ -652,7 +633,6 @@
 <blockquote>
 <p>感谢中文译本的翻译人员<br>老高 @spawnris<br>刘宇 @liuyu<br>明源 @muxueqz<br>大牙 @suqi<br>蒋委员长 @jiedo<br>欢迎提交<a href="https://github.com/eastlakeside/interpy-zh/issues">Issues</a></p>
 </blockquote>
-<p>本文虽然名为进阶, 但完全适合仅了解基本语法的Green Man, 部分特性会结合3.5的源码加以深入, 刨根问底. 通篇文章很长, 但绝对值得花上几个小时细细一读, 你要明白, 阅读任何干货, 无思考, 不吸收.</p>
           
       
     </div>
@@ -732,10 +712,6 @@
               <p>只是想好好睡个觉, 但大脑就是异常兴奋, 闭上眼脑子里就是各种无声电影, 辗转反侧.</p>
 <p>好像上一次写随笔, 也是在凌晨两点. 只是那篇迟迟没有发表, 两篇干脆就合二为一了.</p>
 <p>最近被知乎上关于养猫的系列回答戳中了, 比如<a href="https://www.zhihu.com/question/36435092">猫可以萌到什么程度</a>, <a href="https://www.zhihu.com/question/26558211">养猫是一种怎样的体验</a>, 甚至动了养一只奶猫的念头. 有段时间, 不敢发任何朋友圈, 不敢发表任何关于个人近况的东西, 那段时间, 感觉人和人的关系真的好脆弱. 脆弱到再熟悉的人, 只要手指轻轻一触, 她的全部就会从你全部的生活里, 消失殆尽. 相比之下, 一只宠物, 成天吃吃喝喝, 没心没肺, 惹你生气了卖个萌给你挠两下就好了. 什么也不用考虑, 你需要做的, 只是爱它, 对它好就行了, 人和动物之间的情感反倒更加可贵. 人本就是感性动物, 所有的理性不过都是伪装. 佛宗里有这么一段话,</p>
-<pre><code>参禅之处, 看山是山, 看水是水.
-对禅初悟, 看山不是山, 看水不是水.
-禅中彻悟, 看山仍是山, 看水仍是水.
-</code></pre><p>就好像从小就读着, 人之初, 性本善. 但有一天, 你所相信的世界就那么直勾勾地抽了你一鞭子, 于是你便开始对身边的一切将信将疑, 心无所依, 不知所往. 但随时间推移, 或突然或渐渐, 才恍然大悟, 内心又归于平静. 可能大部分人对人生的追求不外乎事业和爱情, 前者通过社会的肯定来确认自身的价值, 后者通过异性的肯定来确认自身的价值. 但也许, 一个人一生中最为宝贵的东西, 就是一段心路历程. 这段历程很可能是你独自一人度过的, 其中的心酸只有自己知道. 但它教会了你重新去看待世界, 看待人性, 看待自己. 用谦逊的眼光看自己, 用谦和的态度看世界. 这段历程之所以宝贵, 是因为在那之后, 你就变了. 变了这个词在我们印象里多少带有贬义, 但其实变化本身并没有好坏之分, 又或者说, 好的那部分往往就是坏的, 而坏的那部分往往也就是好的?</p>
           
       
     </div>
@@ -810,11 +786,6 @@
           
               <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>知识就是力量, 但是拥有力量不代表着可以为所欲为.<br>在安全领域里, 没有挡不住的矛, 也没有攻不破的盾.<br>并非信安大牛, 本文只是出于好奇和实验, 仅供学习和参考</p>
 <p>你知道的越多, 就越能保护好自己.</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>像 <code>Kali Linux</code> 和 <code>BackTrack</code> 等发行版, 预装好了各种安全工具和软件包<br>下文实际环境为 <code>Arch</code>, 对象是某公司的弱口令路由器…</p>
-<pre><code>sudo pacman -S wireless_tools
-sudo pacman -S aircrack-ng
-sudo pacman -S reaver
-</code></pre><p>好了, 工具具备, 只欠东风.<br>接下来就正式体验一番黑客入侵的感觉</p>
           
       
     </div>

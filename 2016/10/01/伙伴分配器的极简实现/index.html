@@ -16,23 +16,20 @@
 
 
 <meta name="description" content="前言本来准备看下的源码, 结果从进程描述符看到slab分配器再到这一篇关于buddy_memory_allocation 的实现
-作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)
-算法过程其内存分配和释放的过程一张图就能说明白对于要分配的内存大小N, 首先要找大于它的2的最小幂">
+作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="伙伴分配器的极简实现">
 <meta property="og:url" content="http://rancho1110.com/2016/10/01/伙伴分配器的极简实现/index.html">
 <meta property="og:site_name" content="伯爵在古堡">
 <meta property="og:description" content="前言本来准备看下的源码, 结果从进程描述符看到slab分配器再到这一篇关于buddy_memory_allocation 的实现
-作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)
-算法过程其内存分配和释放的过程一张图就能说明白对于要分配的内存大小N, 首先要找大于它的2的最小幂">
+作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)">
 <meta property="og:image" content="http://rancho1110.com/2016/10/01/伙伴分配器的极简实现/算法图示.png">
 <meta property="og:image" content="http://rancho1110.com/2016/10/01/伙伴分配器的极简实现/实现图示.png">
 <meta property="og:updated_time" content="2016-09-30T18:02:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="伙伴分配器的极简实现">
 <meta name="twitter:description" content="前言本来准备看下的源码, 结果从进程描述符看到slab分配器再到这一篇关于buddy_memory_allocation 的实现
-作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)
-算法过程其内存分配和释放的过程一张图就能说明白对于要分配的内存大小N, 首先要找大于它的2的最小幂">
+作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)">
 <meta name="twitter:image" content="http://rancho1110.com/2016/10/01/伙伴分配器的极简实现/算法图示.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -323,10 +320,9 @@
       
           
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本来准备看下<linux sched.h="">的源码, 结果从进程描述符看到slab分配器再到这一篇关于<code>buddy_memory_allocation</code> 的实现</linux></p>
-<p>作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)</p>
+<p>作为内存管理的实现方案之一, buddy的亮点在于快速搜索(基于二叉树的log(N)时间复杂度), 以及避免内存碎片(最佳适配, 但同样有内部碎片问题, 得于斯者毁于斯)<br><a id="more"></a></p>
 <h2 id="算法过程"><a href="#算法过程" class="headerlink" title="算法过程"></a>算法过程</h2><p>其内存分配和释放的过程一张图就能说明白<br>对于要分配的内存大小N, 首先要找大于它的2的最小幂N2 (比如10字节就变成16字节)<br>然后寻找大小合适的内存块, 找到则返回.<br>没找到则做一次”切割”, 继续寻找-切割寻找..</p>
 <p>而当内存释放的时候, 如果相邻块未使用则将其合并(如果可能就还原回切割前的状态)</p>
-<a id="more"></a>
 <img src="/2016/10/01/伙伴分配器的极简实现/算法图示.png" alt="算法图示" title="算法图示">
 <h2 id="极简实现"><a href="#极简实现" class="headerlink" title="极简实现"></a>极简实现</h2><p>像上面需要组织”一分为二”的结构, 我们自然会采用二叉树(实际代码里是数组形式的完全二叉树)来接管内存. 每个节点的初始值为其管理的内存单元数, 如果被分配了就值零. 比如图中初始化之后tree[0] == 16, tree[2] == 8. 而在每次更新一个节点的状态后, 同时要回溯更新父节点</p>
 <img src="/2016/10/01/伙伴分配器的极简实现/实现图示.png" alt="实现图示" title="实现图示">

@@ -17,26 +17,20 @@
 
 <meta name="description" content="持续更新
 前言Linux内核确实是开源一大宝库, 阅读源码学到了很多东西, 学习版本库见这里. 接下来会持续更新几篇内核相关的文章
-而本文的主题就是Kernel中的各种宏, 其实十有八九都是和指针强转相关. 琢磨指针早已是大一的事了, 好在现在看这些代码倒也基本无压力
-container_of/offsetof定义内核链表的时候, 链表本身是仅含有指针域而没有数据域的, 简捷实用而且很通用!
-12">
+而本文的主题就是Kernel中的各种宏, 其实十有八九都是和指针强转相关. 琢磨指针早已是大一的事了, 好在现在看这些代码倒也基本无压力">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内核宏的前世今生">
 <meta property="og:url" content="http://rancho1110.com/2016/09/28/宏孩儿的前世今生/index.html">
 <meta property="og:site_name" content="伯爵在古堡">
 <meta property="og:description" content="持续更新
 前言Linux内核确实是开源一大宝库, 阅读源码学到了很多东西, 学习版本库见这里. 接下来会持续更新几篇内核相关的文章
-而本文的主题就是Kernel中的各种宏, 其实十有八九都是和指针强转相关. 琢磨指针早已是大一的事了, 好在现在看这些代码倒也基本无压力
-container_of/offsetof定义内核链表的时候, 链表本身是仅含有指针域而没有数据域的, 简捷实用而且很通用!
-12">
+而本文的主题就是Kernel中的各种宏, 其实十有八九都是和指针强转相关. 琢磨指针早已是大一的事了, 好在现在看这些代码倒也基本无压力">
 <meta property="og:updated_time" content="2016-09-28T07:59:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内核宏的前世今生">
 <meta name="twitter:description" content="持续更新
 前言Linux内核确实是开源一大宝库, 阅读源码学到了很多东西, 学习版本库见这里. 接下来会持续更新几篇内核相关的文章
-而本文的主题就是Kernel中的各种宏, 其实十有八九都是和指针强转相关. 琢磨指针早已是大一的事了, 好在现在看这些代码倒也基本无压力
-container_of/offsetof定义内核链表的时候, 链表本身是仅含有指针域而没有数据域的, 简捷实用而且很通用!
-12">
+而本文的主题就是Kernel中的各种宏, 其实十有八九都是和指针强转相关. 琢磨指针早已是大一的事了, 好在现在看这些代码倒也基本无压力">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -328,10 +322,10 @@ container_of/offsetof定义内核链表的时候, 链表本身是仅含有指针
         <p><em>持续更新</em></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Linux内核确实是开源一大宝库, 阅读源码学到了很多东西, 学习版本库见<a href="https://github.com/RanchoCooper/AmazingKernel" target="_blank" rel="external">这里</a>. 接下来会持续更新几篇内核相关的文章</p>
 <p>而本文的主题就是Kernel中的各种宏, 其实十有八九都是和指针强转相关. 琢磨指针早已是大一的事了, 好在现在看这些代码倒也基本无压力</p>
+<a id="more"></a>
 <h3 id="container-of-offsetof"><a href="#container-of-offsetof" class="headerlink" title="container_of/offsetof"></a>container_of/offsetof</h3><p>定义内核链表的时候, 链表本身是仅含有指针域而没有数据域的, 简捷实用而且很通用!</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> list_node &#123;</div><div class="line">    <span class="keyword">struct</span> list_node *next, *prev;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>这样一来, 就意味着你在使用该链表时需要再定义一个包含链表和数据字段的结构体. 而在通过链表来遍历其中的数据时, 就得解决<strong>通过结构体成员来得到结构体本身的地址</strong></p>
-<a id="more"></a>
 <p>遍历接口简单明了</p>
 <p>ptr:    指向下一节点的<code>list_node</code><br>type:   结构体类型本身<br>member: 成员<code>list_node</code>的变量名</p>
 <pre><code>list_entry(ptr, type, member)
