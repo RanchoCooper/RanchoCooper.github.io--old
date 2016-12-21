@@ -105,13 +105,6 @@
     </url>
 
     <url>
-        <loc>http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/</loc>
-        <lastmod>2016-12-16T11:46:39.937Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</loc>
         <lastmod>2016-12-16T11:47:15.770Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -121,6 +114,13 @@
     <url>
         <loc>http://rancho1110.com/categories/%E6%9C%AD%E8%AE%B0/</loc>
         <lastmod>2016-12-16T11:47:49.240Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://rancho1110.com/categories/%E9%9A%8F%E7%AC%94/</loc>
+        <lastmod>2016-12-18T14:35:50.625Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

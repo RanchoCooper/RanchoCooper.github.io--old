@@ -30,17 +30,10 @@ XFCE4的桌面和Paper主题">
 <meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/sublime.png">
 <meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/vim.png">
 <meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Brussels_12.jpg">
-<meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Brussels_5.jpg">
-<meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Dresden_2.jpg">
 <meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Dresden_7.jpg">
-<meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Dresden_9.jpg">
-<meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Dubai_8.jpg">
 <meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Hawaii_16.jpg">
-<meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/London_12.jpg">
-<meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/New_York_8.jpg">
 <meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Paris_3.jpg">
 <meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Santorini_Greece_2.jpg">
-<meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Santorini_Greece_3.jpg">
 <meta property="og:image" content="http://rancho1110.com/2016/07/27/Arch不只是初恋/Sydney_12.jpg">
 <meta property="og:updated_time" content="2016-07-27T04:49:55.000Z">
 <meta name="twitter:card" content="summary">
@@ -352,20 +345,11 @@ XFCE4的桌面和Paper主题">
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line">config_json=<span class="string">'http://dreamafar.qiniudn.com/destination.json'</span></div><div class="line">pic_base_url=<span class="string">'http://dreamafar.qiniudn.com/'</span></div><div class="line">output_path=<span class="string">"<span class="variable">$HOME</span>/Pictures/afar"</span>       <span class="comment"># or somewhere else</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [[ ! <span class="_">-d</span> $<span class="string">"output_path"</span> ]]; <span class="keyword">then</span></div><div class="line">    mkdir -p <span class="string">"<span class="variable">$output_path</span>"</span></div><div class="line">    <span class="keyword">if</span> [[ ! <span class="string">"$?"</span> = <span class="string">"0"</span> ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">'mkdir error!'</span></div><div class="line">        <span class="built_in">return</span> 1</div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line">list=$(curl --silent <span class="string">"<span class="variable">$config_json</span>"</span> | pcregrep --multiline --only-matching=1 --only-matching=2 --om-separator=<span class="string">':'</span> <span class="string">'"alias": "(\w+)",[^,]+,[^:]+: (\d+)'</span>)</div><div class="line"><span class="keyword">for</span> <span class="built_in">alias</span>_count <span class="keyword">in</span> <span class="variable">$list</span>;<span class="keyword">do</span></div><div class="line">    array=(<span class="variable">$&#123;alias_count//:/ &#125;</span>)</div><div class="line">    <span class="keyword">for</span> id <span class="keyword">in</span> $(seq 1 <span class="variable">$&#123;array[1]&#125;</span>);<span class="keyword">do</span></div><div class="line">        filename=<span class="string">"<span class="variable">$&#123;array[0]&#125;</span>_<span class="variable">$&#123;id&#125;</span>.jpg"</span></div><div class="line">        <span class="keyword">if</span> [[ <span class="_">-f</span> <span class="string">"<span class="variable">$output_path</span>/<span class="variable">$filename</span>"</span> ]]; <span class="keyword">then</span></div><div class="line">            <span class="built_in">echo</span> <span class="string">"jump --------- <span class="variable">$filename</span>"</span></div><div class="line">            <span class="built_in">continue</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">        url=<span class="string">"<span class="variable">$pic_base_url</span><span class="variable">$filename</span>"</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"downloading <span class="variable">$url</span>"</span></div><div class="line">        wget --quiet --directory-prefix=<span class="string">"<span class="variable">$output_path</span>"</span> <span class="string">"<span class="variable">$url</span>"</span></div><div class="line">        <span class="keyword">if</span> [[ ! <span class="string">"$?"</span> = <span class="string">"0"</span> ]]; <span class="keyword">then</span></div><div class="line">            <span class="built_in">echo</span> <span class="string">"download ========= <span class="variable">$url</span> error!"</span></div><div class="line">            <span class="built_in">continue</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">        sleep 0.5s</div><div class="line">    <span class="keyword">done</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
 <p>附几张漂亮的壁纸</p>
 <img src="/2016/07/27/Arch不只是初恋/Brussels_12.jpg" alt="a" title="a">
-<img src="/2016/07/27/Arch不只是初恋/Brussels_5.jpg" alt="a" title="a">
-<img src="/2016/07/27/Arch不只是初恋/Dresden_2.jpg" alt="a" title="a">
 <img src="/2016/07/27/Arch不只是初恋/Dresden_7.jpg" alt="a" title="a">
-<img src="/2016/07/27/Arch不只是初恋/Dresden_9.jpg" alt="a" title="a">
-<img src="/2016/07/27/Arch不只是初恋/Dubai_8.jpg" alt="a" title="a">
 <img src="/2016/07/27/Arch不只是初恋/Hawaii_16.jpg" alt="a" title="a">
-<img src="/2016/07/27/Arch不只是初恋/London_12.jpg" alt="a" title="a">
-<img src="/2016/07/27/Arch不只是初恋/New_York_8.jpg" alt="a" title="a">
 <img src="/2016/07/27/Arch不只是初恋/Paris_3.jpg" alt="a" title="a">
 <img src="/2016/07/27/Arch不只是初恋/Santorini_Greece_2.jpg" alt="a" title="a">
-<img src="/2016/07/27/Arch不只是初恋/Santorini_Greece_3.jpg" alt="a" title="a">
 <img src="/2016/07/27/Arch不只是初恋/Sydney_12.jpg" alt="a" title="a">
-<p>我们世界都很小，交朋友, 谈恋爱, 只是看看对方的生活, 看看他/她的世界是什么样的.</p>
-<p>世界其实没有那么大, 只是我们的内心在躁动. 外面的大千世界, 其实也不过就是, 大山和大海, 人潮和街道</p>
 
       
     </div>
